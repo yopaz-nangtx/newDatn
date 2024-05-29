@@ -36,7 +36,7 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Name <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control @error('homework_name') is-invalid @enderror" name="homework_name" placeholder="Enter Homework" value="{{ old('homework_name') }}">
+                                            <input type="text" class="form-control @error('homework_name') is-invalid @enderror" name="homework_name" placeholder="Enter Name" value="{{ old('homework_name') }}">
                                             @error('homework_name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -60,12 +60,16 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Questions <span class="login-danger">*</span></label>
-                                            <input type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" placeholder="Enter Homework" value="{{ old('end_date') }}">
-                                            @error('end_date')
+                                            <select class="multi-question form-control @error('questions') is-invalid @enderror" name="questions[]" multiple="multiple">
+                                                @foreach ($questions as $question)
+                                                    <option value="{{ $question->id }}"><span style="font-size: bold">Question {{ $question->id }}: </span>{{ $question->question }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('questions')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
-                                            @enderror
+                                            @enderror                                            
                                         </div>
                                     </div>
 
@@ -106,4 +110,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.multi-question').select2();
+        });
+    </script>
 @endsection

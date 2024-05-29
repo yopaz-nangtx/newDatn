@@ -134,6 +134,16 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::post('homework/delete', 'homeworkDelete')->name('homework/delete'); // delete record homework
     });
 
+    // ------------------------ document -------------------------------//
+    Route::controller(HomeworkController::class)->group(function () {
+        Route::get('homework/list', 'homework')->middleware('auth')->name('homework/list'); // list homework
+        Route::get('homework/add/page', 'homeworkAdd')->middleware('auth')->name('homework/add/page'); // page homework
+        Route::post('homework/add/save', 'homeworkSave')->name('homework/add/save'); // save record homework
+        Route::get('homework/edit/{id}', 'homeworkEdit'); // view for edit
+        Route::post('homework/update', 'homeworkUpdate')->name('homework/update'); // update record homework
+        Route::post('homework/delete', 'homeworkDelete')->name('homework/delete'); // delete record homework
+    });
+
     // ----------------------- department -----------------------------//
     Route::controller(DepartmentController::class)->group(function () {
         Route::get('department/list/page', 'departmentList')->middleware('auth')->name('department/list/page'); // department/list/page

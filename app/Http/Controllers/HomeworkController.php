@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Homework;
+use App\Models\HomeworkQuestion;
+use App\Models\Question;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,36 +23,45 @@ class HomeworkController extends Controller
     /** homework add page */
     public function homeworkAdd()
     {
-        return view('homework.add-homework');
+        $questions = Question::orderBy('id', 'desc')->get();
+
+        return view('homework.add-homework', compact('questions'));
     }
 
     /** homework save record */
     public function homeworkSave(Request $request)
     {
         $request->validate([
-            'question' => 'required|string',
-            'option_1' => 'required|string',
-            'option_2' => 'required|string',
-            'option_3' => 'required|string',
-            'option_4' => 'required|string',
-            'answer' => 'required',
+            'homework_name' => 'required|string',
+            'time' => 'required|integer|min:1',
+            'end_date' => 'required',
+            'end_time' => 'required',
+            'questions' => 'required',
         ]);
+        // dd($request->all());
 
         DB::beginTransaction();
         try {
-            $question = new Homework;
-            $question->question = $request['question'];
-            $question->option_1 = $request['option_1'];
-            $question->option_2 = $request['option_2'];
-            $question->option_3 = $request['option_3'];
-            $question->option_4 = $request['option_4'];
-            $question->answer = $request['answer'];
-            $question->save();
+            $dateTimeString = $request->end_date . ' ' . $request->end_time;
+            $dateTime = Carbon::createFromFormat('Y-m-d H:i', $dateTimeString);
+
+            $homework = new Homework;
+            $homework->homework_name = $request['homework_name'];
+            $homework->time = $request['time'];
+            $homework->end_time = $dateTime;
+            $homework->save();
+
+            foreach ($request->questions as $questionId) {
+                HomeworkQuestion::create([
+                    'homework_id' => $homework->id,
+                    'question_id' => $questionId,
+                ]);
+            }
 
             Toastr::success('Has been add successfully', 'Success');
             DB::commit();
 
-            return redirect()->route('question/list');
+            return redirect()->route('homework/list');
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('fail, Add new question', 'Error');
@@ -61,40 +73,57 @@ class HomeworkController extends Controller
     /** view for edit homework */
     public function homeworkEdit($id)
     {
-        $questionEdit = Homework::find($id);
+        $allQuestions = Question::orderBy('id', 'desc')->get();
+        $homeworkEdit = Homework::find($id);
+        $questionIds = $homeworkEdit->questions->pluck('id');
+        $dateTime = Carbon::parse($homeworkEdit->end_time);
+        $endDate = $dateTime->format('Y-m-d');
+        $endTime = $dateTime->format('H:i');
 
-        return view('question.edit-question', compact('questionEdit'));
+        return view('homework.edit-homework', compact('homeworkEdit', 'allQuestions', 'questionIds', 'endDate', 'endTime'));
     }
 
     /** update record */
     public function homeworkUpdate(Request $request)
     {
-        $question = Homework::find($request->id);
+        unset($request['_token'], $request['_method']);
+
+        $homework = Homework::find($request->id);
 
         $request->validate([
-            'question' => 'required|string',
-            'option_1' => 'required|string',
-            'option_2' => 'required|string',
-            'option_3' => 'required|string',
-            'option_4' => 'required|string',
-            'answer' => 'required',
+            'homework_name' => 'required|string',
+            'time' => 'required|integer|min:1',
+            'end_date' => 'required',
+            'end_time' => 'required',
+            'questions' => 'required',
         ]);
         
         DB::beginTransaction();
         try {   
-            $question = Homework::find($request->id);
-            $question->question = $request['question'];
-            $question->option_1 = $request['option_1'];
-            $question->option_2 = $request['option_2'];
-            $question->option_3 = $request['option_3'];
-            $question->option_4 = $request['option_4'];
-            $question->answer = $request['answer'];
-            $question->save();
+            $dateTimeString = $request->end_date . ' ' . $request->end_time;
+            $dateTime = Carbon::createFromFormat('Y-m-d H:i', $dateTimeString);
+
+            $homework = Homework::find($request->id);
+            $homework->homework_name = $request['homework_name'];
+            $homework->time = $request['time'];
+            $homework->end_time = $dateTime;
+
+            foreach ($homework->homeworkQuestions as $homeworkQuestion) {
+                $homeworkQuestion->delete();
+            }
+            $homework->save();
+
+            foreach ($request->questions as $questionId) {
+                HomeworkQuestion::create([
+                    'homework_id' => $homework->id,
+                    'question_id' => $questionId,
+                ]);
+            }
 
             Toastr::success('Has been update successfully', 'Success');
             DB::commit();
 
-            return redirect()->route('question/list');
+            return redirect()->route('homework/list');
 
         } catch (\Exception $e) {
             DB::rollback();
