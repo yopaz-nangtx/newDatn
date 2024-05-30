@@ -96,8 +96,18 @@
                         <li><a class="{{ (request()->is('homework/edit/*')) ? 'active' : '' }}">Homework Edit</a></li>
                     </ul>
                 </li>
+
+                <li class="submenu {{set_active(['document/list','document/add/page'])}} {{ (request()->is('document/edit/*')) ? 'active' : '' }} {{ (request()->is('document/profile/*')) ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-book"></i>
+                        <span> Documents</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('document/list') }}"  class="{{set_active(['document/list'])}}">Document List</a></li>
+                    </ul>
+                </li>
                 
-                <li class="submenu {{set_active(['department/add/page','department/edit/page'])}} {{ request()->is('department/edit/*') ? 'active' : '' }}">
+                {{-- <li class="submenu {{set_active(['department/add/page','department/edit/page'])}} {{ request()->is('department/edit/*') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-building"></i>
                         <span> Departments</span>
                         <span class="menu-arrow"></span>
@@ -172,7 +182,7 @@
                 </li>
                 <li>
                     <a href="library.html"><i class="fas fa-book"></i> <span>Library</span></a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>

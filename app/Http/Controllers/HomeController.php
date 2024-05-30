@@ -70,12 +70,6 @@ class HomeController extends Controller
 
         DB::beginTransaction();
         try {
-            unset($request['_token'], $request['_method']);
-            if ($request->file('image')) {
-                $request['image_url'] = $this->upload($request);
-            }
-            unset($request['image']);
-
             $user = User::find($request->id);
 
             $user->name = $request['name'];
@@ -86,9 +80,9 @@ class HomeController extends Controller
             $user->birthday = Carbon::createFromFormat('Y-m-d', $request['birthday']);
             $user->save();
 
-            dd($request->file('image'));
             $user->image_url = $user->uploadFile($request->file('image'), $user->id);
             $user->save();
+            $user->setSession();
 
             Toastr::success('Has been update successfully', 'Success');
 

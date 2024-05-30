@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Session;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -101,11 +102,22 @@ class User extends Authenticatable
     public function uploadFile($file, $userId)
     {
         if ($file) {
-            dd($file);
             $path = $file->store('avatars/'.$userId, 's3');
             return env('AWS_S3_BASE_URL', 'https://s3-datn.s3.ap-southeast-2.amazonaws.com/').$path;
         } else {
             return $this->image_url;
         }
+    }
+
+    public function setSession() {
+        Session::put('id', $this->id);
+        Session::put('name', $this->name);
+        Session::put('email', $this->email);
+        Session::put('gender', $this->gender);
+        Session::put('phone_number', $this->phone_number);
+        Session::put('address', $this->address);
+        Session::put('role_name', $this->roleName());
+        Session::put('birthday', $this->birthday);
+        Session::put('image_url', $this->image_url);
     }
 }

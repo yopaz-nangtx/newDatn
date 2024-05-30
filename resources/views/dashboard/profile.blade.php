@@ -64,6 +64,10 @@
                                             <p class="col-sm-9">{{ $user->name }}</p>
                                         </div>
                                         <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Gender</p>
+                                            <p class="col-sm-9">{{ $user->genderName() }}</p>
+                                        </div>
+                                        <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Date of Birth</p>
                                             <p class="col-sm-9">{{ $user->birthday }}</p>
                                         </div>
