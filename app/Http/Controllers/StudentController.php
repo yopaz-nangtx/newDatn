@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
-use Exception;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
@@ -17,7 +15,7 @@ class StudentController extends Controller
     /** index page student list */
     public function student()
     {
-        $studentList = User::where('role', 3)->orderBy('id','desc')->get();
+        $studentList = User::where('role', 3)->orderBy('id', 'desc')->get();
 
         return view('student.student', compact('studentList'));
     }
@@ -25,7 +23,7 @@ class StudentController extends Controller
     /** index page student grid */
     public function studentGrid()
     {
-        $studentList = User::where('role', 3)->orderBy('id','desc')->get();
+        $studentList = User::where('role', 3)->orderBy('id', 'desc')->get();
 
         return view('student.student-grid', compact('studentList'));
     }
@@ -46,7 +44,7 @@ class StudentController extends Controller
             'gender' => 'required',
             'birthday' => 'required|before:today',
             'image' => 'required|mimes:jpg,jpeg,png',
-            'address' => 'required|string'
+            'address' => 'required|string',
         ]);
 
         DB::beginTransaction();
@@ -54,11 +52,11 @@ class StudentController extends Controller
             $request['role'] = 3;
             $request['password'] = Hash::make('password');
             // $request['image_url'] = $this->upload($request);
-            
+
             $user = new User;
             $user->name = $request['name'];
             $user->email = $request['email'];
-            $user->gender = (int)$request['gender'];
+            $user->gender = (int) $request['gender'];
             $user->address = $request['address'];
             $user->phone_number = $request['phone_number'];
             $user->birthday = Carbon::createFromFormat('Y-m-d', $request['birthday']);
@@ -68,7 +66,6 @@ class StudentController extends Controller
             $user->save();
             $user->image_url = $user->uploadFile($request->file('image'), $user->id);
             $user->save();
-
 
             Toastr::success('Has been add successfully', 'Success');
             DB::commit();
@@ -99,16 +96,16 @@ class StudentController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($user->email, 'email')
+                Rule::unique('users')->ignore($user->email, 'email'),
             ],
             'name' => 'required|string',
             'phone_number' => 'required|string|regex:/^0\d{9,10}$/',
             'birthday' => 'required|before:today',
             'image' => 'nullable|file|mimes:jpg,jpeg,png',
             'gender' => 'required',
-            'address' => 'required|string'
+            'address' => 'required|string',
         ]);
-        
+
         DB::beginTransaction();
         try {
             unset($request['_token'], $request['_method']);
@@ -118,14 +115,15 @@ class StudentController extends Controller
             unset($request['image']);
 
             $user = User::find($request->id);
-            
+
             $user->name = $request['name'];
             $user->email = $request['email'];
-            $user->gender = (int)$request['gender'];
+            $user->gender = (int) $request['gender'];
             $user->address = $request['address'];
             $user->phone_number = $request['phone_number'];
             $user->birthday = Carbon::createFromFormat('Y-m-d', $request['birthday']);
-            $user->image_url = $request['image_url'];
+            $user->save();
+            $user->image_url = $user->uploadFile($request->file('image'), $user->id);
             $user->save();
 
             Toastr::success('Has been update successfully', 'Success');
@@ -161,39 +159,5 @@ class StudentController extends Controller
 
             return redirect()->route('student/list');
         }
-    }
-
-    public function upload($request)
-    {
-        $file = $request->file('image');
-
-        try {
-            return $this->uploadImage($file);
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
-    public function uploadImage($file)
-    {
-        $fileName = $file->getClientOriginalName();
-        $file->move(public_path('uploads'), $fileName);
-
-        $imageUrl = url('public/uploads/'.$fileName);
-
-        return $imageUrl;
-    }
-
-    public function prepairFolder()
-    {
-        $year = date('Y');
-        $month = date('m');
-        $storagePath = "$year/$month/";
-
-        if (! file_exists($storagePath)) {
-            mkdir($storagePath, 0755, true);
-        }
-
-        return $storagePath;
     }
 }

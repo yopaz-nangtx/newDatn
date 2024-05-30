@@ -2,6 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
+
 class HomeController extends Controller
 {
     /**
@@ -28,7 +36,72 @@ class HomeController extends Controller
     /** profile user */
     public function userProfile()
     {
-        return view('dashboard.profile');
+        $user = User::find(Session::get('id'));
+
+        return view('dashboard.profile', compact('user'));
+    }
+
+    /** profile user */
+    public function userProfileEdit()
+    {
+        $user = User::find(Session::get('id'));
+
+        return view('accounts.edit-profile', compact('user'));
+    }
+
+    /** profile user */
+    public function userProfileUpdate(Request $request)
+    {
+        $user = User::find($request->id);
+
+        $request->validate([
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($user->email, 'email'),
+            ],
+            'name' => 'required|string',
+            'phone_number' => 'required|string|regex:/^0\d{9,10}$/',
+            'birthday' => 'required|before:today',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png',
+            'gender' => 'required',
+            'address' => 'required|string',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            unset($request['_token'], $request['_method']);
+            if ($request->file('image')) {
+                $request['image_url'] = $this->upload($request);
+            }
+            unset($request['image']);
+
+            $user = User::find($request->id);
+
+            $user->name = $request['name'];
+            $user->email = $request['email'];
+            $user->gender = (int) $request['gender'];
+            $user->address = $request['address'];
+            $user->phone_number = $request['phone_number'];
+            $user->birthday = Carbon::createFromFormat('Y-m-d', $request['birthday']);
+            $user->save();
+
+            dd($request->file('image'));
+            $user->image_url = $user->uploadFile($request->file('image'), $user->id);
+            $user->save();
+
+            Toastr::success('Has been update successfully', 'Success');
+
+            DB::commit();
+
+            return redirect()->route('user/profile/page');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('fail, Update Profile', 'Error');
+
+            return redirect()->back();
+        }
     }
 
     /** teacher dashboard */

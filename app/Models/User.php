@@ -27,13 +27,13 @@ class User extends Authenticatable
     const ROLE = [
         'ADMIN',
         'TEACHER',
-        'STUDENT'
+        'STUDENT',
     ];
 
     const GENDER = [
         'Male',
         'Female',
-        'Other'
+        'Other',
     ];
 
     protected $hidden = [
@@ -76,9 +76,9 @@ class User extends Authenticatable
     {
         if ($this->role == 1) {
             return self::ROLE[0];
-        } else if ($this->role == 2) {
+        } elseif ($this->role == 2) {
             return self::ROLE[1];
-        } else if ($this->role == 3) {
+        } elseif ($this->role == 3) {
             return self::ROLE[2];
         }
 
@@ -89,21 +89,23 @@ class User extends Authenticatable
     {
         if ($this->gender == 1) {
             return self::GENDER[0];
-        } 
-        else if ($this->gender == 2) {
+        } elseif ($this->gender == 2) {
             return self::GENDER[1];
-        } 
-        else if ($this->gender == 3) {
+        } elseif ($this->gender == 3) {
             return self::GENDER[2];
         }
 
         return 'UNDEFINED_GENDER';
     }
 
-    public function uploadFile($file, $userId) {
-        $fileName = $file->getClientOriginalName();
-        $path = $file->store('avatars/'.$userId, 's3');
-
-        return env('AWS_S3_BASE_URL', 'https://s3-datn.s3.ap-southeast-2.amazonaws.com/') . $path;
+    public function uploadFile($file, $userId)
+    {
+        if ($file) {
+            dd($file);
+            $path = $file->store('avatars/'.$userId, 's3');
+            return env('AWS_S3_BASE_URL', 'https://s3-datn.s3.ap-southeast-2.amazonaws.com/').$path;
+        } else {
+            return $this->image_url;
+        }
     }
 }

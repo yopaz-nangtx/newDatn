@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class TeacherController extends Controller
@@ -17,7 +16,7 @@ class TeacherController extends Controller
     /** add teacher page */
     public function teacherAdd()
     {
-        $users = User::where('role', 2)->orderBy('id','desc')->get();
+        $users = User::where('role', 2)->orderBy('id', 'desc')->get();
 
         return view('teacher.add-teacher', compact('users'));
     }
@@ -48,7 +47,7 @@ class TeacherController extends Controller
             'gender' => 'required',
             'birthday' => 'required|before:today',
             'image' => 'required|mimes:jpg,jpeg,png',
-            'address' => 'required|string'
+            'address' => 'required|string',
         ]);
 
         DB::beginTransaction();
@@ -56,11 +55,11 @@ class TeacherController extends Controller
             $request['role'] = 2;
             $request['password'] = Hash::make('password');
             $request['image_url'] = $this->upload($request);
-            
+
             $user = new User;
             $user->name = $request['name'];
             $user->email = $request['email'];
-            $user->gender = (int)$request['gender'];
+            $user->gender = (int) $request['gender'];
             $user->address = $request['address'];
             $user->phone_number = $request['phone_number'];
             $user->birthday = Carbon::createFromFormat('Y-m-d', $request['birthday']);
@@ -98,16 +97,16 @@ class TeacherController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($user->email, 'email')
+                Rule::unique('users')->ignore($user->email, 'email'),
             ],
             'name' => 'required|string',
             'phone_number' => 'required|string|regex:/^0\d{9,10}$/',
             'birthday' => 'required|before:today',
             'image' => 'nullable|file|mimes:jpg,jpeg,png',
             'gender' => 'required',
-            'address' => 'required|string'
+            'address' => 'required|string',
         ]);
-        
+
         DB::beginTransaction();
         try {
             unset($request['_token'], $request['_method']);
@@ -117,10 +116,10 @@ class TeacherController extends Controller
             unset($request['image']);
 
             $user = User::find($request->id);
-            
+
             $user->name = $request['name'];
             $user->email = $request['email'];
-            $user->gender = (int)$request['gender'];
+            $user->gender = (int) $request['gender'];
             $user->address = $request['address'];
             $user->phone_number = $request['phone_number'];
             $user->birthday = Carbon::createFromFormat('Y-m-d', $request['birthday']);

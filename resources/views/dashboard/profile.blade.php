@@ -14,24 +14,25 @@
                 </div>
             </div>
         </div>
-
+        {{-- message --}}
+        {!! Toastr::message() !!}
         <div class="row">
             <div class="col-md-12">
                 <div class="profile-header">
                     <div class="row align-items-center">
                         <div class="col-auto profile-image">
                             <a href="#">
-                                <img class="rounded-circle" alt="{{ Session::get('name') }}" src="{{ Session::get('image_url') ? Session::get('image_url') :
+                                <img class="rounded-circle" alt="{{ $user->name }}" src="{{ $user->image_url ? $user->image_url :
                                     asset('../assets/img/profile-user.jpg') }}">
                             </a>
                         </div>
                         <div class="col ms-md-n2 profile-user-info">
-                            <h4 class="user-name mb-0">{{ Session::get('name') }}</h4>
-                            <div class="user-Location"><i class="fas fa-map-marker-alt"></i> {{ Session::get('address') }}</div>
-                            <div class="about-text">{{ Session::get('role_name') }}</div>
+                            <h4 class="user-name mb-0">{{ $user->name }}</h4>
+                            <div class="user-Location"><i class="fas fa-map-marker-alt"></i> {{ $user->address }}</div>
+                            <div class="about-text">{{ $user->roleName() }}</div>
                         </div>
                         <div class="col-auto profile-btn">
-                            <a href="" class="btn btn-primary">Edit</a>
+                            <a href="{{ route('user/profile/edit') }}" class="btn btn-primary">Edit</a>
                         </div>
                     </div>
                 </div>
@@ -54,29 +55,29 @@
                                     <div class="card-body">
                                         <h5 class="card-title d-flex justify-content-between">
                                             <span>Personal Details</span>
-                                            <a class="edit-link" data-bs-toggle="modal"
-                                                href="#edit_personal_details"><i
+                                            <a class="edit-link"
+                                                href="{{ route('user/profile/edit') }}"><i
                                                     class="far fa-edit me-1"></i>Edit</a>
                                         </h5>
                                         <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Name</p>
-                                            <p class="col-sm-9">{{ Session::get('name') }}</p>
+                                            <p class="col-sm-9">{{ $user->name }}</p>
                                         </div>
                                         <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Date of Birth</p>
-                                            <p class="col-sm-9">{{ Session::get('birthday') }}</p>
+                                            <p class="col-sm-9">{{ $user->birthday }}</p>
                                         </div>
                                         <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Email</p>
-                                            <p class="col-sm-9" style="color: blue">{{ Session::get('email') }}</p>
+                                            <p class="col-sm-9" style="color: blue">{{ $user->email }}</p>
                                         </div>
                                         <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Mobile</p>
-                                            <p class="col-sm-9">{{ Session::get('phone_number') }}</p>
+                                            <p class="col-sm-9">{{ $user->phone_number }}</p>
                                         </div>
                                         <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0">Address</p>
-                                            <p class="col-sm-9 mb-0">{{ Session::get('address') }}</p>
+                                            <p class="col-sm-9 mb-0">{{ $user->address }}</p>
                                         </div>
                                     </div>
                                 </div>

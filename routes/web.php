@@ -63,6 +63,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/home', 'index')->middleware('auth')->name('home');
         Route::get('user/profile/page', 'userProfile')->middleware('auth')->name('user/profile/page');
+        Route::get('user/profile/edit', 'userProfileEdit')->middleware('auth')->name('user/profile/edit');
+        Route::post('user/profile/update', 'userProfileUpdate')->middleware('auth')->name('user/profile/update');
         Route::get('teacher/dashboard', 'teacherDashboardIndex')->middleware('auth')->name('teacher/dashboard');
         Route::get('student/dashboard', 'studentDashboardIndex')->middleware('auth')->name('student/dashboard');
     });
@@ -248,6 +250,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 //     });
 // });
 
-// Route::post('/logout', [LoginController::class, 'destroy'])
-//     ->middleware('auth')
-//     ->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');

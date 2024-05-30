@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Homework;
 use App\Models\HomeworkQuestion;
 use App\Models\Question;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +41,7 @@ class HomeworkController extends Controller
 
         DB::beginTransaction();
         try {
-            $dateTimeString = $request->end_date . ' ' . $request->end_time;
+            $dateTimeString = $request->end_date.' '.$request->end_time;
             $dateTime = Carbon::createFromFormat('Y-m-d H:i', $dateTimeString);
 
             $homework = new Homework;
@@ -97,10 +96,10 @@ class HomeworkController extends Controller
             'end_time' => 'required',
             'questions' => 'required',
         ]);
-        
+
         DB::beginTransaction();
-        try {   
-            $dateTimeString = $request->end_date . ' ' . $request->end_time;
+        try {
+            $dateTimeString = $request->end_date.' '.$request->end_time;
             $dateTime = Carbon::createFromFormat('Y-m-d H:i', $dateTimeString);
 
             $homework = Homework::find($request->id);

@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Room;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class RoomController extends Controller
 {
     public function room()
     {
-        $rooms = Room::orderBy('id','desc')->get();
+        $rooms = Room::orderBy('id', 'desc')->get();
 
         return view('room.room', compact('rooms'));
     }
-
 
     /** room add page */
     public function roomAdd()
@@ -38,7 +36,7 @@ class RoomController extends Controller
         try {
             $room = new Room;
             $room->name = $request['name'];
-            $room->capacity = (int)$request['capacity'];
+            $room->capacity = (int) $request['capacity'];
             $room->description = $request['description'];
             $room->save();
 
@@ -71,14 +69,14 @@ class RoomController extends Controller
             'name' => [
                 'required',
                 'string',
-                Rule::unique('rooms')->ignore($room->name, 'name')
+                Rule::unique('rooms')->ignore($room->name, 'name'),
             ],
             'capacity' => 'required|integer|gt:0',
             'description' => 'string',
         ]);
-        
+
         DB::beginTransaction();
-        try {   
+        try {
             $room = Room::find($request->id);
             $room->name = $request['name'];
             $room->capacity = $request['capacity'];

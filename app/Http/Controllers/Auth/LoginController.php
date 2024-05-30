@@ -39,8 +39,10 @@ class LoginController extends Controller
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
                 /** get session */
                 $user = Auth::User();
+                Session::put('id', $user->id);
                 Session::put('name', $user->name);
                 Session::put('email', $user->email);
+                Session::put('gender', $user->gender);
                 Session::put('phone_number', $user->phone_number);
                 Session::put('address', $user->address);
                 Session::put('role_name', $user->roleName());

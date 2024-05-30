@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Question;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
@@ -80,9 +78,9 @@ class QuestionController extends Controller
             'option_4' => 'required|string',
             'answer' => 'required',
         ]);
-        
+
         DB::beginTransaction();
-        try {   
+        try {
             $question = Question::find($request->id);
             $question->question = $request['question'];
             $question->option_1 = $request['option_1'];
