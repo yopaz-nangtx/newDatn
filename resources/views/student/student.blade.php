@@ -96,7 +96,7 @@
                                             <td hidden class="avatar">{{ $list->upload }}</td>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a href="student-details.html"class="avatar avatar-sm me-2">
+                                                    <a class="avatar avatar-sm me-2">
                                                         <img class="avatar-img rounded-circle" src="{{ $list->image_url ? asset($list->image_url) :
                                                             asset('../images/photo_defaults.jpg') }}" alt="User Image">
                                                     </a>

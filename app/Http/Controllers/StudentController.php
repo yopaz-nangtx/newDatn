@@ -25,7 +25,7 @@ class StudentController extends Controller
     /** index page student grid */
     public function studentGrid()
     {
-        $studentList = User::where('role', 3)->get();
+        $studentList = User::where('role', 3)->orderBy('id','desc')->get();
 
         return view('student.student-grid', compact('studentList'));
     }
@@ -53,7 +53,7 @@ class StudentController extends Controller
         try {
             $request['role'] = 3;
             $request['password'] = Hash::make('password');
-            $request['image_url'] = $this->upload($request);
+            // $request['image_url'] = $this->upload($request);
             
             $user = new User;
             $user->name = $request['name'];
@@ -64,8 +64,11 @@ class StudentController extends Controller
             $user->birthday = Carbon::createFromFormat('Y-m-d', $request['birthday']);
             $user->role = $request['role'];
             $user->password = $request['password'];
-            $user->image_url = $request['image_url'];
+            // $user->image_url = $request['image_url'];
             $user->save();
+            $user->image_url = $user->uploadFile($request->file('image'), $user->id);
+            $user->save();
+
 
             Toastr::success('Has been add successfully', 'Success');
             DB::commit();
@@ -83,6 +86,8 @@ class StudentController extends Controller
     public function studentEdit($id)
     {
         $studentEdit = User::where('id', $id)->where('role', 3)->first();
+
+        dd($studentEdit);
 
         return view('student.edit-student', compact('studentEdit'));
     }

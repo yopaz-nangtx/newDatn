@@ -40,10 +40,8 @@
                                             <div class="card-body">
                                                 <div class="student-box flex-fill">
                                                     <div class="student-img">
-                                                        <a href="{{ url('student/profile/'.$list->id) }}">
-                                                            <img class="img-fluid" alt="Students Info" src="{{ $list->image_url ? asset($list->image_url) :
-                                                                asset('../images/photo_defaults.jpg') }}" width="20%" height="20%">
-                                                        </a>
+                                                        <img class="img-fluid avatar-img rounded-circle" alt="Students Info" src="{{ $list->image_url ? asset($list->image_url) :
+                                                            asset('../images/photo_defaults.jpg') }}" width="20%" height="20%">
                                                     </div>
                                                     <div class="student-content pb-0">
                                                         <h5><a href="{{ url('student/edit/'.$list->id) }}">{{ $list->name }}</a></h5>

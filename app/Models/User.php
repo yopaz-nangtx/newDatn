@@ -99,4 +99,11 @@ class User extends Authenticatable
 
         return 'UNDEFINED_GENDER';
     }
+
+    public function uploadFile($file, $userId) {
+        $fileName = $file->getClientOriginalName();
+        $path = $file->store('avatars/'.$userId, 's3');
+
+        return env('AWS_S3_BASE_URL', 'https://s3-datn.s3.ap-southeast-2.amazonaws.com/') . $path;
+    }
 }
