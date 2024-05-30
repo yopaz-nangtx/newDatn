@@ -13,7 +13,7 @@ class RoomController extends Controller
 {
     public function room()
     {
-        $rooms = Room::all();
+        $rooms = Room::orderBy('id','desc')->get();
 
         return view('room.room', compact('rooms'));
     }
@@ -38,7 +38,7 @@ class RoomController extends Controller
         try {
             $room = new Room;
             $room->name = $request['name'];
-            $room->capacity = $request['capacity'];
+            $room->capacity = (int)$request['capacity'];
             $room->description = $request['description'];
             $room->save();
 

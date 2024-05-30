@@ -87,8 +87,6 @@ class StudentController extends Controller
     {
         $studentEdit = User::where('id', $id)->where('role', 3)->first();
 
-        dd($studentEdit);
-
         return view('student.edit-student', compact('studentEdit'));
     }
 

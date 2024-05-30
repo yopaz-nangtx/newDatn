@@ -56,7 +56,7 @@
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                         <label>Gender <span class="login-danger">*</span></label>
-                                        <select class="form-control select  @error('gender') is-invalid @enderror" name="gender">
+                                        <select class="form-control @error('gender') is-invalid @enderror" name="gender">
                                             <option selected disabled>Select Gender</option>
                                             <option value="1" {{ $teacher->gender == '1' ? "selected" :""}}>Male</option>
                                             <option value="2" {{ $teacher->gender == '2' ? "selected" :"Female"}}>Female</option>

@@ -60,7 +60,7 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Questions <span class="login-danger">*</span></label>
-                                            <select class="multi-question form-control @error('questions') is-invalid @enderror" name="questions[]" multiple="multiple">
+                                            <select class="form-control multi-question @error('questions') is-invalid @enderror" name="questions[]" multiple="multiple">
                                                 @foreach ($questions as $question)
                                                     <option value="{{ $question->id }}"><span style="font-size: bold">Question {{ $question->id }}: </span>{{ $question->question }}</option>
                                                 @endforeach
