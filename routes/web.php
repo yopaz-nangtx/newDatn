@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\DocumentController;
@@ -7,12 +8,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\Setting;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\UserManagementController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -154,109 +154,24 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::post('lesson/delete', 'lessonDelete')->name('lesson/delete'); // delete record lesson
     });
 
-    // ----------------------- department -----------------------------//
-    // Route::controller(DepartmentController::class)->group(function () {
-    //     Route::get('department/list/page', 'departmentList')->middleware('auth')->name('department/list/page'); // department/list/page
-    //     Route::get('department/add/page', 'indexDepartment')->middleware('auth')->name('department/add/page'); // page add department
-    //     Route::get('department/edit/{department_id}', 'editDepartment'); // page add department
-    //     Route::post('department/save', 'saveRecord')->middleware('auth')->name('department/save'); // department/save
-    //     Route::post('department/update', 'updateRecord')->middleware('auth')->name('department/update'); // department/update
-    //     Route::post('department/delete', 'deleteRecord')->middleware('auth')->name('department/delete'); // department/delete
-    //     Route::get('get-data-list', 'getDataList')->name('get-data-list'); // get data list
+    Route::controller(AttendanceController::class)->group(function () {
+        Route::get('attendance/list/{id}', 'attendance')->middleware('auth')->name('attendance/list'); // list attendance
+        Route::get('attendance/add/page/{id}', 'attendanceAdd')->middleware('auth'); // page attendance
+        Route::post('attendance/add/save', 'attendanceSave')->name('attendance/add/save'); // save record attendance
+        Route::get('attendance/edit/{id}/class/{class_id}', 'attendanceEdit'); // view for edit
+        Route::post('attendance/update', 'attendanceUpdate')->name('attendance/update'); // update record attendance
+        Route::post('attendance/delete', 'attendanceDelete')->name('attendance/delete'); // delete record attendance
+    });
 
-    // });
-
-    // ----------------------- subject -----------------------------//
-    // Route::controller(SubjectController::class)->group(function () {
-    //     Route::get('subject/list/page', 'subjectList')->middleware('auth')->name('subject/list/page'); // subject/list/page
-    //     Route::get('subject/add/page', 'subjectAdd')->middleware('auth')->name('subject/add/page'); // subject/add/page
-    //     Route::post('subject/save', 'saveRecord')->name('subject/save'); // subject/save
-    //     Route::post('subject/update', 'updateRecord')->name('subject/update'); // subject/update
-    //     Route::post('subject/delete', 'deleteRecord')->name('subject/delete'); // subject/delete
-    //     Route::get('subject/edit/{subject_id}', 'subjectEdit'); // subject/edit/page
-    // });
-
-    // ----------------------- invoice -----------------------------//
-    // Route::controller(InvoiceController::class)->group(function () {
-    //     Route::get('invoice/list/page', 'invoiceList')->middleware('auth')->name('invoice/list/page'); // subjeinvoicect/list/page
-    //     Route::get('invoice/paid/page', 'invoicePaid')->middleware('auth')->name('invoice/paid/page'); // invoice/paid/page
-    //     Route::get('invoice/overdue/page', 'invoiceOverdue')->middleware('auth')->name('invoice/overdue/page'); // invoice/overdue/page
-    //     Route::get('invoice/draft/page', 'invoiceDraft')->middleware('auth')->name('invoice/draft/page'); // invoice/draft/page
-    //     Route::get('invoice/recurring/page', 'invoiceRecurring')->middleware('auth')->name('invoice/recurring/page'); // invoice/recurring/page
-    //     Route::get('invoice/cancelled/page', 'invoiceCancelled')->middleware('auth')->name('invoice/cancelled/page'); // invoice/cancelled/page
-    //     Route::get('invoice/grid/page', 'invoiceGrid')->middleware('auth')->name('invoice/grid/page'); // invoice/grid/page
-    //     Route::get('invoice/add/page', 'invoiceAdd')->middleware('auth')->name('invoice/add/page'); // invoice/add/page
-    //     Route::post('invoice/add/save', 'saveRecord')->name('invoice/add/save'); // invoice/add/save
-    //     Route::post('invoice/update/save', 'updateRecord')->name('invoice/update/save'); // invoice/update/save
-    //     Route::post('invoice/delete', 'deleteRecord')->name('invoice/delete'); // invoice/delete
-    //     Route::get('invoice/edit/{invoice_id}', 'invoiceEdit')->middleware('auth')->name('invoice/edit/page'); // invoice/edit/page
-    //     Route::get('invoice/view/{invoice_id}', 'invoiceView')->middleware('auth')->name('invoice/view/page'); // invoice/view/page
-    //     Route::get('invoice/settings/page', 'invoiceSettings')->middleware('auth')->name('invoice/settings/page'); // invoice/settings/page
-    //     Route::get('invoice/settings/tax/page', 'invoiceSettingsTax')->middleware('auth')->name('invoice/settings/tax/page'); // invoice/settings/tax/page
-    //     Route::get('invoice/settings/bank/page', 'invoiceSettingsBank')->middleware('auth')->name('invoice/settings/bank/page'); // invoice/settings/bank/page
-    // });
-
-    // ----------------------- accounts ----------------------------//
-    // Route::controller(AccountsController::class)->group(function () {
-    //     Route::get('account/fees/collections/page', 'index')->middleware('auth')->name('account/fees/collections/page'); // account/fees/collections/page
-    //     Route::get('add/fees/collection/page', 'addFeesCollection')->middleware('auth')->name('add/fees/collection/page'); // add/fees/collection
-    //     Route::post('fees/collection/save', 'saveRecord')->middleware('auth')->name('fees/collection/save'); // fees/collection/save
-    // });
+    Route::controller(ResultController::class)->group(function () {
+        Route::get('result/list/{id}', 'result')->middleware('auth')->name('result/list'); // list result
+        Route::get('result/add/page/{id}', 'resultAdd')->middleware('auth'); // page result
+        Route::post('result/add/save', 'resultSave')->name('result/add/save'); // save record result
+        Route::get('result/edit/{id}/class/{class_id}', 'resultEdit'); // view for edit
+        Route::post('result/update', 'resultUpdate')->name('result/update'); // update record result
+        Route::post('result/delete', 'resultDelete')->name('result/delete'); // delete record result
+    });
 });
-
-// Route::get('/login', [LoginController::class, 'create'])
-//     ->middleware('guest')
-//     ->name('login');
-
-// Route::post('/login', [LoginController::class, 'store'])
-//     ->middleware('guest');
-
-// Route::middleware(['auth', 'manager'])->group(function () {
-//     Route::get('/my-info/{id}', [AuthController::class, 'myInfo'])->name('auth.my-info');
-//     Route::PUT('/change-info/{id}', [AuthController::class, 'changeMyInfo'])->name('auth.change-info');
-
-//     Route::get('/password/{id}', [AuthController::class, 'password'])->name('auth.password');
-//     Route::PUT('/change-password/{id}', [AuthController::class, 'changeMyPassword'])->name('auth.change-my-password');
-
-//     Route::resource('question', QuestionController::class);
-
-//     Route::resource('homework', HomeworkController::class);
-
-//     Route::resource('document', DocumentController::class);
-//     Route::post('/document/upload', [DocumentController::class, 'uploadFile'])->name('document.upload');
-//     Route::get('/document/download/{id}', [DocumentController::class, 'downloadFile'])->name('document.download');
-
-//     Route::resource('/class', ClassController::class);
-
-//     Route::get('/class-student/{id}', [StudentController::class, 'index'])->name('class_student.index');
-//     Route::get('/class-student-detail/{class_id}-{student_id}', [StudentController::class, 'detail'])->name('class_student.detail');
-
-//     Route::get('/class-lesson/{id}', [ClassLessonController::class, 'index'])->name('class_lesson.index');
-//     Route::get('/class-lesson-create/{class_id}', [ClassLessonController::class, 'create'])->name('class_lesson.create');
-//     Route::post('/class-lesson-store/{class_id}', [ClassLessonController::class, 'store'])->name('class_lesson.store');
-//     Route::get('/class-lesson-show/{class_id}-{lesson_id}', [ClassLessonController::class, 'show'])->name('class_lesson.show');
-
-//     Route::group(['prefix' => 'class_student'], function(){
-//         Route::get('/{class_id}/{student_id}/', [StudentController::class, 'detail'])->name('class.student.detail');
-//     });
-//     // Route::get('/{class_id}/{student_id}', [StudentController::class, 'detail'])->name('class.student.detail');
-//     // Route::get('/class/lesson/{class_id}/{lesson_id}', [AttendanceController::class, 'index'])->name('class.lesson.attendance.list');
-
-//     Route::middleware('admin')->group(function () {
-//         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-//         Route::resource('user', UserController::class);
-//         Route::resource('teacher', TeacherController::class);
-//         Route::resource('room', RoomController::class);
-
-//     });
-
-//     Route::middleware('teacher')->group(function () {
-//         Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
-
-//         Route::get('/calendar', [ScheduleController::class, 'index'])->name('calendar.index');
-//     });
-// });
 
 Route::get('/logout', [LoginController::class, 'logout'])
     ->middleware('auth')
