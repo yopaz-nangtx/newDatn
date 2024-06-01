@@ -65,4 +65,9 @@ class Classroom extends Model
     {
         return $this->hasMany(ClassroomStudent::class, 'classroom_id', 'id');
     }
+
+    public function countStudent() 
+    {
+        return count($this->students);
+    }
 }

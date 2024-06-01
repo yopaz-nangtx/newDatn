@@ -5,12 +5,6 @@
                 <li class="menu-title">
                     <span>Main Menu</span>
                 </li>
-                <li class="{{set_active(['setting/page'])}}">
-                    <a href="{{ route('setting/page') }}">
-                        <i class="fas fa-cog"></i> 
-                        <span>Settings</span>
-                    </a>
-                </li>
                 <li class="submenu {{set_active(['home','teacher/dashboard','student/dashboard'])}}">
                     <a>
                         <i class="fas fa-tachometer-alt"></i>
@@ -23,18 +17,6 @@
                         <li><a href="{{ route('student/dashboard') }}" class="{{set_active(['student/dashboard'])}}">Student Dashboard</a></li>
                     </ul>
                 </li>
-                @if (Session::get('role_name') === 'Admin' || Session::get('role_name') === 'Super Admin')
-                <li class="submenu {{set_active(['list/users'])}} {{ (request()->is('view/user/edit/*')) ? 'active' : '' }}">
-                    <a href="#">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>User Management</span> 
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="{{ route('list/users') }}" class="{{set_active(['list/users'])}} {{ (request()->is('view/user/edit/*')) ? 'active' : '' }}">List Users</a></li>
-                    </ul>
-                </li>
-                @endif
 
                 <li class="submenu {{set_active(['student/list','student/grid','student/add/page'])}} {{ (request()->is('student/edit/*')) ? 'active' : '' }} {{ (request()->is('student/profile/*')) ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-graduation-cap"></i>
@@ -58,6 +40,18 @@
                         {{-- <li><a href="teacher-details.html">Teacher View</a></li> --}}
                         <li><a href="{{ route('teacher/add/page') }}" class="{{set_active(['teacher/add/page'])}}">Teacher Add</a></li>
                         <li><a class="{{ (request()->is('teacher/edit/*')) ? 'active' : '' }}">Teacher Edit</a></li>
+                    </ul>
+                </li>
+
+                <li class="submenu  {{set_active(['class/add/page','class/list/page','class/grid/page','class/edit'])}} {{ (request()->is('class/edit/*')) ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-calendar-day"></i>
+                        <span> Classes</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('class/list') }}" class="{{set_active(['class/list','class/grid/page'])}}">Class List</a></li>
+                        <li><a href="{{ route('class/add/page') }}" class="{{set_active(['class/add/page'])}}">Class Add</a></li>
+                        <li><a class="{{ (request()->is('class/edit/*')) ? 'active' : '' }}">Class Edit</a></li>
                     </ul>
                 </li>
 

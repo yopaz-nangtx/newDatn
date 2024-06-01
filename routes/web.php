@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomeworkController;
@@ -143,6 +144,16 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::post('document/upload', 'documentUpload')->middleware('auth')->name('document/upload'); // page document
         Route::get('document/download/{id}', 'documentDownload')->middleware('auth')->name('document/download'); // page document
         Route::post('document/delete', 'documentDelete')->name('document/delete'); // delete record document
+    });
+
+    // ------------------------ class -------------------------------//
+    Route::controller(ClassController::class)->group(function () {
+        Route::get('class/list', 'class')->middleware('auth')->name('class/list'); // list class
+        Route::get('class/add/page', 'classAdd')->middleware('auth')->name('class/add/page'); // page class
+        Route::post('class/add/save', 'classSave')->name('class/add/save'); // save record class
+        Route::get('class/edit/{id}', 'classEdit'); // view for edit
+        Route::post('class/update', 'classUpdate')->name('class/update'); // update record class
+        Route::post('class/delete', 'classDelete')->name('class/delete'); // delete record class
     });
 
     // ----------------------- department -----------------------------//
