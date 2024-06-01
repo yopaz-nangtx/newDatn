@@ -5,6 +5,7 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomeworkController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\Setting;
@@ -142,7 +143,15 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::post('class/add/save', 'classSave')->name('class/add/save'); // save record class
         Route::get('class/edit/{id}', 'classEdit'); // view for edit
         Route::post('class/update', 'classUpdate')->name('class/update'); // update record class
-        Route::post('class/delete', 'classDelete')->name('class/delete'); // delete record class
+    });
+
+    Route::controller(LessonController::class)->group(function () {
+        Route::get('lesson/list/{id}', 'lesson')->middleware('auth')->name('lesson/list'); // list lesson
+        Route::get('lesson/add/page/{id}', 'lessonAdd')->middleware('auth'); // page lesson
+        Route::post('lesson/add/save', 'lessonSave')->name('lesson/add/save'); // save record lesson
+        Route::get('lesson/edit/{id}/class/{class_id}', 'lessonEdit'); // view for edit
+        Route::post('lesson/update', 'lessonUpdate')->name('lesson/update'); // update record lesson
+        Route::post('lesson/delete', 'lessonDelete')->name('lesson/delete'); // delete record lesson
     });
 
     // ----------------------- department -----------------------------//

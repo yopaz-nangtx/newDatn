@@ -37,6 +37,11 @@ class Lesson extends Model
         return $this->hasMany(Attendance::class, 'lesson_id', 'id');
     }
 
+    public function lessonHomeworks()
+    {
+        return $this->hasMany(LessonHomework::class, 'lesson_id', 'id');
+    }
+
     public function homeworks()
     {
         return $this->belongsToMany(Homework::class, 'lesson_homeworks', 'lesson_id', 'homework_id');

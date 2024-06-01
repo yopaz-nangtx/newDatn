@@ -3,7 +3,7 @@
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
                 <li class="menu-title">
-                    <span>Main Menu</span>
+                    <span>Management</span>
                 </li>
                 <li class="submenu {{set_active(['home','teacher/dashboard','student/dashboard'])}}">
                     <a>
