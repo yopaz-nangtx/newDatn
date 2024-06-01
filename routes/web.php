@@ -49,7 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
     });
 });
 
-Auth::routes();
 Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
     // ----------------------------login ------------------------------//
     Route::controller(LoginController::class)->group(function () {
@@ -69,16 +68,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::post('user/profile/update', 'userProfileUpdate')->middleware('auth')->name('user/profile/update');
         Route::get('teacher/dashboard', 'teacherDashboardIndex')->middleware('auth')->name('teacher/dashboard');
         Route::get('student/dashboard', 'studentDashboardIndex')->middleware('auth')->name('student/dashboard');
-    });
-
-    // ----------------------------- user controller ---------------------//
-    Route::controller(UserManagementController::class)->group(function () {
-        Route::get('list/users', 'index')->middleware('auth')->name('list/users');
-        Route::post('change/password', 'changePassword')->name('change/password');
-        Route::get('view/user/edit/{id}', 'userView')->middleware('auth');
-        Route::post('user/update', 'userUpdate')->name('user/update');
-        Route::post('user/delete', 'userDelete')->name('user/delete');
-        Route::get('get-users-data', 'getUsersData')->name('get-users-data'); /** get all data users */
     });
 
     // ------------------------ setting -------------------------------//

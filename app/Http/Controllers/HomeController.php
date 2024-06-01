@@ -41,7 +41,7 @@ class HomeController extends Controller
         return view('dashboard.profile', compact('user'));
     }
 
-    /** profile user */
+    /** view profile user */
     public function userProfileEdit()
     {
         $user = User::find(Session::get('id'));
@@ -49,7 +49,7 @@ class HomeController extends Controller
         return view('accounts.edit-profile', compact('user'));
     }
 
-    /** profile user */
+    /** update profile user */
     public function userProfileUpdate(Request $request)
     {
         $user = User::find($request->id);
