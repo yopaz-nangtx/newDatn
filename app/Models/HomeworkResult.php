@@ -15,4 +15,14 @@ class HomeworkResult extends Model
         'score',
         'is_finished',
     ];
+
+    public function homework()
+    {
+        return $this->belongsTo(Homework::class, 'homework_id', 'id');
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'student_id', 'id');
+    }
 }

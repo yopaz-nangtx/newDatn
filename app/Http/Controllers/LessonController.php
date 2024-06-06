@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attendance;
 use App\Models\Classroom;
 use App\Models\ClassroomStudent;
 use App\Models\Homework;
+use App\Models\HomeworkResult;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -155,6 +157,45 @@ class LessonController extends Controller
 
             return redirect()->route('lesson/list', $request->class_id);
         }
+    }
+
+    public function lessonAttendance(Request $request, $lesson_id)
+    {
+        $lesson = Lesson::findOrFail($lesson_id);
+        $classroom = $lesson->classroom;
+        $students = $classroom->students;
+        $studentRender = [];
+
+        foreach ($students as $student) {
+            $attendance = Attendance::where('lesson_id', $lesson->id)->where('student_id', $student->id)->first();
+            if($attendance ) {
+                $student['attendance'] = $attendance;
+                $studentRender[] = $student;
+            }
+        }
+
+        return view('lesson.attendance', compact('lesson', 'studentRender'));
+    }
+
+    public function lessonHomework(Request $request, $lesson_id)
+    {
+        $lesson = Lesson::findOrFail($lesson_id);
+        $classroom = $lesson->classroom;
+        $students = $classroom->students;
+        $homeworkIds = LessonHomework::where('lesson_id', $lesson->id)->pluck('homework_id')->toArray();
+        $studentRenders = [];
+
+        foreach ($students as $student) {
+            $homeworkResults = HomeworkResult::where('student_id', $student->id)->whereIn('homework_id', $homeworkIds)->get();
+            if($homeworkResults) {
+                foreach($homeworkResults as $homeworkResult) {
+                    $student['homeworkResult'] = $homeworkResult;
+                    $studentRenders[] = $student;
+                }
+            }
+        }
+
+        return view('lesson.homework', compact('lesson', 'studentRenders'));
     }
 
     public function detailApi(Request $request, $lesson_id)

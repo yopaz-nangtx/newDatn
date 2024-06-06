@@ -152,6 +152,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('lesson/edit/{id}/class/{class_id}', 'lessonEdit'); // view for edit
         Route::post('lesson/update', 'lessonUpdate')->name('lesson/update'); // update record lesson
         Route::post('lesson/delete', 'lessonDelete')->name('lesson/delete'); // delete record lesson
+
+        Route::get('lesson/homework/{lesson_id}', 'lessonHomework'); // view for edit
+        Route::post('lesson/homework/{lesson_id}', 'postLessonHomework'); // view for edit
+        Route::get('lesson/attendance/{id}', 'lessonAttendance'); // view for edit
+
+        
     });
 
     Route::controller(AttendanceController::class)->group(function () {

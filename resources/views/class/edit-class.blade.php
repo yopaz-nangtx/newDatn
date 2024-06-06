@@ -8,10 +8,10 @@
                 <div class="row align-items-center">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Add Classes</h3>
+                            <h3 class="page-title">Edit Class</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('class/add/page') }}">Class</a></li>
-                                <li class="breadcrumb-item active">Add Classes</li>
+                                <li class="breadcrumb-item active">Edit Class</li>
                             </ul>
                         </div>
                     </div>

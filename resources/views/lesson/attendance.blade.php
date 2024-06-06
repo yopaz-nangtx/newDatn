@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Class Detail</h3>
+                            <h3 class="page-title">Attendance</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('class/list') }}">Class</a></li>
                                 <li class="breadcrumb-item active">All Classes</li>
@@ -49,11 +49,7 @@
                             <div class="page-header">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="page-title">Class Detail</h3>
-                                    </div>
-                                    <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                                        <a href="{{ url('lesson/add/page/' . $class->id) }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        <h3 class="page-title">Attendance</h3>
                                     </div>
                                 </div>
                             </div>
@@ -69,14 +65,15 @@
                                                 </div>
                                             </th>
                                             <th>ID</th>
-                                            <th>Lesson Name</th>
-                                            <th>Count Homework</th>
-                                            <th>Time</th>
-                                            <th class="text-end">Action</th>
+                                            <th>Name</th>
+                                            <th>Mobile Number</th>
+                                            <th>Address</th>
+                                            <th>Reason</th>
+                                            <th>Created at</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($lessons as $key=>$list )
+                                        @foreach ($studentRender as $key=>$list )
                                         <tr>
                                             <td>
                                                 <div class="form-check check-tables">
@@ -84,27 +81,20 @@
                                                 </div>
                                             </td>
                                             <td>{{ ++$key }}</td>
-                                            <td hidden class="id">{{ $list->id }}</td>
                                             <td hidden class="avatar">{{ $list->upload }}</td>
-                                            <td>{{ $list->lesson_name }}</td>
-                                            <td>{{ count($list->homeworks) }}</td>
-                                            <td>{{ $list->start_time }}</td>
-                                            <td class="text-end">
-                                                <div class="actions">
-                                                    <a href="{{ url('lesson/homework/'.$list->id) }}" class="btn btn-sm bg-danger-light {{ $list->is_finished ? 'disabled-link' : '' }}" title="Attendance">
-                                                        <i class="fas fa-book me-2"></i>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <a class="avatar avatar-sm me-2">
+                                                        <img class="avatar-img rounded-circle" src="{{ $list->image_url ? asset($list->image_url) :
+                                                            asset('../images/photo_defaults.jpg') }}" alt="User Image">
                                                     </a>
-                                                    <a href="{{ url('lesson/attendance/'.$list->id) }}" class="btn btn-sm bg-danger-light {{ $list->is_finished ? 'disabled-link' : '' }}" title="Attendance">
-                                                        <i class="fas fa-clipboard-list me-2"></i>
-                                                    </a>
-                                                    <a href="{{ url('lesson/edit/'.$list->id . '/class/' . $class->id) }}" class="btn btn-sm bg-danger-light {{ $list->is_finished ? 'disabled-link' : '' }}" title="Edit">
-                                                        <i class="fas fa-edit me-2"></i>
-                                                    </a>
-                                                    <a class="btn btn-sm bg-danger-light lesson_delete {{ $list->is_finished ? 'disabled-link' : '' }}" data-bs-toggle="modal" data-bs-target="#lessonUser" title="Delete">
-                                                        <i class="far fa-trash-alt me-2"></i>
-                                                    </a>
-                                                </div>
+                                                    <a href="student-details.html">{{ $list->name }}</a>
+                                                </h2>
                                             </td>
+                                            <td>{{ $list->phone_number }}</td>
+                                            <td>{{ $list->address }}</td>
+                                            <td>{{ $list->attendance?->reason }}</td>
+                                            <td>{{ $list->attendance?->created_at }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -129,7 +119,6 @@
                     <div class="modal-btn delete-action">
                         <form action="{{ route('lesson/delete') }}" method="POST">
                             @csrf
-                            <input type="hidden" class="form-control" name="class_id" value="{{ $class->id }}" readonly>
                             <div class="row">
                                 <input type="hidden" name="id" class="e_id" value="">
                                 <input type="hidden" name="avatar" class="e_avatar" value="">
