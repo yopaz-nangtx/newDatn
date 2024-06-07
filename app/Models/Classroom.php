@@ -70,4 +70,9 @@ class Classroom extends Model
     {
         return count($this->students);
     }
+
+    public function revenue() 
+    {
+        return count($this->students) * $this->fee;
+    }
 }

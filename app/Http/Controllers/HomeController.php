@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -30,7 +31,18 @@ class HomeController extends Controller
     /** home dashboard */
     public function index()
     {
-        return view('dashboard.home');
+        // All time
+        $countRevenue = 0;
+        $countStudent = count(User::where('role', 3)->get());
+        $countTeacher = count(User::where('role', 2)->get());
+        $classes = Classroom::all();
+        $countClass = count($classes);
+        foreach($classes as $class)
+        {
+            $countRevenue += $class->revenue();
+        } 
+
+        return view('dashboard.home', compact('countStudent', 'countTeacher', 'countClass', 'countRevenue'));
     }
 
     /** profile user */
