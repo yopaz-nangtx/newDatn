@@ -1,21 +1,42 @@
 "use strict";
 
 $(document).ready(function () {
-    if ($("#monthly-revenue-chart").length > 0) {
+    if ($("#monthly-class-chart").length > 0) {
         var options = {
         chart: { height: 350, type: "line", toolbar: { show: false } },
         dataLabels: { enabled: false },
         stroke: { curve: "smooth" },
         series: [
             {
-            name: "Teachers",
+            name: "Happening",
             color: "#3D5EE1",
             data: [45, 60, 75, 51, 42, 42, 30],
             },
             {
-            name: "Students",
+            name: "Finished",
             color: "#70C4CF",
             data: [24, 48, 56, 32, 34, 52, 25],
+            },
+        ],
+        xaxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"] },
+        };
+        var chart = new ApexCharts(
+        document.querySelector("#monthly-class-chart"),
+        options,
+        );
+        chart.render();
+    }
+
+    if ($("#monthly-revenue-chart").length > 0) {
+        var options = {
+        chart: { height: 350, type: "line", toolbar: { show: false } },
+        dataLabels: { enabled: false },
+        stroke: { curve: "straight" },
+        series: [
+            {
+            name: "Revenue",
+            color: "#3D5EE1",
+            data: [45, 60, 75, 51, 42, 42, 30],
             },
         ],
         xaxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"] },
@@ -31,20 +52,15 @@ $(document).ready(function () {
         var options = {
         chart: { height: 350, type: "line", toolbar: { show: false } },
         dataLabels: { enabled: false },
-        stroke: { curve: "smooth" },
+        stroke: { curve: "straight" },
         series: [
             {
-            name: "Teachers",
+            name: "Revenue",
             color: "#3D5EE1",
             data: [45, 60, 75, 51, 42, 42, 30],
             },
-            {
-            name: "Students",
-            color: "#70C4CF",
-            data: [24, 48, 56, 32, 34, 52, 25],
-            },
         ],
-        xaxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"] },
+        xaxis: { categories: [2018, 2019, 2020, 2021, 2022, 2023, 2024] },
         };
         var chart = new ApexCharts(
         document.querySelector("#yearly-revenue-chart"),

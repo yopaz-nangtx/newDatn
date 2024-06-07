@@ -84,7 +84,6 @@
 
         <div class="row">
             <div class="col-md-12 col-lg-6">
-
                 <div class="card card-chart">
                     <div class="card-header">
                         <div class="row align-items-center">
@@ -93,10 +92,7 @@
                             </div>
                             <div class="col-6">
                                 <ul class="chart-list-out">
-                                    <li><span class="circle-blue"></span>Teacher</li>
-                                    <li><span class="circle-green"></span>Student</li>
-                                    <li class="star-menus"><a href="javascript:;"><i
-                                                class="fas fa-ellipsis-v"></i></a></li>
+                                    <li><span class=""></span>000,000 VND</li>
                                 </ul>
                             </div>
                         </div>
@@ -108,7 +104,6 @@
 
             </div>
             <div class="col-md-12 col-lg-6">
-
                 <div class="card card-chart">
                     <div class="card-header">
                         <div class="row align-items-center">
@@ -119,8 +114,6 @@
                                 <ul class="chart-list-out">
                                     <li><span class="circle-blue"></span>Students</li>
                                     <li><span class="circle-green"></span>Teachers</li>
-                                    <li class="star-menus"><a href="javascript:;"><i
-                                                class="fas fa-ellipsis-v"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -138,14 +131,11 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-6">
-                                <h5 class="card-title">Yearly Revenue</h5>
+                                <h5 class="card-title">Yearly Revenue </h5>
                             </div>
                             <div class="col-6">
                                 <ul class="chart-list-out">
-                                    <li><span class="circle-blue"></span>Teacher</li>
-                                    <li><span class="circle-green"></span>Student</li>
-                                    <li class="star-menus"><a href="javascript:;"><i
-                                                class="fas fa-ellipsis-v"></i></a></li>
+                                    <li><span class=""></span>000,000 VND</li>
                                 </ul>
                             </div>
                         </div>
@@ -154,7 +144,6 @@
                         <div id="yearly-revenue-chart"></div>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-12 col-lg-6">
                 <div class="card card-chart">
@@ -167,8 +156,6 @@
                                 <ul class="chart-list-out">
                                     <li><span class="circle-blue"></span>Students</li>
                                     <li><span class="circle-green"></span>Teachers</li>
-                                    <li class="star-menus"><a href="javascript:;"><i
-                                                class="fas fa-ellipsis-v"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -180,7 +167,30 @@
             </div>
         </div>
 
-        
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <h5 class="card-title">Overview Class</h5>
+                            </div>
+                            <div class="col-6">
+                                <ul class="chart-list-out">
+                                    <li><span class="circle-blue"></span>Happening</li>
+                                    <li><span class="circle-green"></span>Finished</li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="monthly-class-chart"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 @endsection
