@@ -46,6 +46,7 @@ class LoginController extends Controller
                 Session::put('phone_number', $user->phone_number);
                 Session::put('address', $user->address);
                 Session::put('role_name', $user->roleName());
+                Session::put('role', $user->role);
                 Session::put('birthday', $user->birthday);
                 Session::put('image_url', $user->image_url);
                 Toastr::success('Login successfully', 'Success');

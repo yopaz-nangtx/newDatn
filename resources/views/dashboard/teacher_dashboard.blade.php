@@ -181,11 +181,11 @@
                                 <div class="card-header">
                                     <div class="row align-items-center">
                                         <div class="col-6">
-                                            <h5 class="card-title">In Progress</h5>
+                                            <h5 class="card-title">Overview Class</h5>
                                         </div>
                                         <div class="col-6">
                                             <ul class="chart-list-out">
-                                                <li><span class="circle-blue"></span>Lessons</li>
+                                                <li><span class="circle-blue"></span>Classes</li>
                                                 <li><span class="circle-green"></span>Students</li>
                                                 <li class="star-menus"><a href="javascript:;"><i
                                                             class="fas fa-ellipsis-v"></i></a></li>
@@ -203,12 +203,12 @@
                                 <div class="card-header">
                                     <div class="row align-items-center">
                                         <div class="col-6">
-                                            <h5 class="card-title">Teaching Activity</h5>
+                                            <h5 class="card-title">In Progress</h5>
                                         </div>
                                         <div class="col-6">
                                             <ul class="chart-list-out">
-                                                <li><span class="circle-blue"></span>Classes</li>
-                                                <li><span class="circle-green"></span>Students</li>
+                                                <li><span class="circle-blue"></span>Happend</li>
+                                                <li><span class="circle-green"></span>All</li>
                                                 <li class="star-menus"><a href="javascript:;"><i
                                                             class="fas fa-ellipsis-v"></i></a></li>
                                             </ul>
@@ -216,7 +216,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div id="school-year-area"></div>
+                                    <div id="in-progress-area"></div>
                                 </div>
                             </div>
                         </div>

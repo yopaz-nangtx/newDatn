@@ -117,6 +117,7 @@ class User extends Authenticatable
         Session::put('phone_number', $this->phone_number);
         Session::put('address', $this->address);
         Session::put('role_name', $this->roleName());
+        Session::put('role', $this->role);
         Session::put('birthday', $this->birthday);
         Session::put('image_url', $this->image_url);
     }

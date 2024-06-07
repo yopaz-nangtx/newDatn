@@ -91,6 +91,9 @@
     <script src="{{ URL::to('assets/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ URL::to('assets/plugins/apexchart/apexcharts.min.js') }}"></script>
     <script src="{{ URL::to('assets/plugins/apexchart/chart-data.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/apexchart/admin-chart-data.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/apexchart/teacher-chart-data.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/apexchart/student-chart-data.js') }}"></script>
     <script src="{{ URL::to('assets/plugins/simple-calendar/jquery.simple-calendar.js') }}"></script>
     <script src="{{ URL::to('assets/js/calander.js') }}"></script>
     <script src="{{ URL::to('assets/js/circle-progress.min.js') }}"></script>
