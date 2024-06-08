@@ -1,31 +1,20 @@
 "use strict";
 
-$(document).ready(function () {
-    if ($("#monthly-class-chart").length > 0) {
-        var options = {
-        chart: { height: 350, type: "line", toolbar: { show: false } },
-        dataLabels: { enabled: false },
-        stroke: { curve: "smooth" },
-        series: [
-            {
-            name: "Happening",
-            color: "#3D5EE1",
-            data: [45, 60, 75, 51, 42, 42, 30],
-            },
-            {
-            name: "Finished",
-            color: "#70C4CF",
-            data: [24, 48, 56, 32, 34, 52, 25],
-            },
-        ],
-        xaxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"] },
-        };
-        var chart = new ApexCharts(
-        document.querySelector("#monthly-class-chart"),
-        options,
-        );
-        chart.render();
-    }
+$(document).ready(async function () {
+    const fetchData = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
+            return null;
+        }
+    };
+
+    const data = await fetchData(baseUrl +'/dashboard/admin');
 
     if ($("#monthly-revenue-chart").length > 0) {
         var options = {
@@ -36,10 +25,10 @@ $(document).ready(function () {
             {
             name: "Revenue",
             color: "#3D5EE1",
-            data: [45, 60, 75, 51, 42, 42, 30],
+            data: data.revenueMonthly.reverse(),
             },
         ],
-        xaxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"] },
+        xaxis: { categories: upcomingMonths },
         };
         var chart = new ApexCharts(
         document.querySelector("#monthly-revenue-chart"),
@@ -57,10 +46,10 @@ $(document).ready(function () {
             {
             name: "Revenue",
             color: "#3D5EE1",
-            data: [45, 60, 75, 51, 42, 42, 30],
+            data: data.revenueYearly.reverse(),
             },
         ],
-        xaxis: { categories: [2018, 2019, 2020, 2021, 2022, 2023, 2024] },
+        xaxis: { categories: recentYears },
         };
         var chart = new ApexCharts(
         document.querySelector("#yearly-revenue-chart"),
@@ -85,27 +74,15 @@ $(document).ready(function () {
             {
             name: "Teachers",
             color: "#70C4CF",
-            data: [420, 532, 516, 575, 519, 517, 454, 392, 262, 383, 446, 551],
+            data: data.growthTeacherMonthly.reverse(),
             },
             {
             name: "Students",
             color: "#3D5EE1",
-            data: [336, 612, 344, 647, 345, 563, 256, 344, 323, 300, 455, 456],
+            data: data.growthStudentMonthly.reverse(),
             },
         ],
-        labels: [
-            2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020,
-        ],
-        xaxis: {
-            labels: { show: false },
-            axisBorder: { show: false },
-            axisTicks: { show: false },
-        },
-        yaxis: {
-            axisBorder: { show: false },
-            axisTicks: { show: false },
-            labels: { style: { colors: "#777" } },
-        },
+        labels: upcomingMonths,
         title: { text: "", align: "left", style: { fontSize: "18px" } },
         };
         var chartBar = new ApexCharts(document.querySelector("#monthly-growth-chart"), optionsBar);
@@ -128,27 +105,15 @@ $(document).ready(function () {
             {
             name: "Teachers",
             color: "#70C4CF",
-            data: [420, 532, 516, 575, 519, 517, 454, 392, 262, 383, 446, 551],
+            data: data.growthTeacherYearly.reverse(),
             },
             {
             name: "Students",
             color: "#3D5EE1",
-            data: [336, 612, 344, 647, 345, 563, 256, 344, 323, 300, 455, 456],
+            data: data.growthStudentYearly.reverse(),
             },
         ],
-        labels: [
-            2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020,
-        ],
-        xaxis: {
-            labels: { show: false },
-            axisBorder: { show: false },
-            axisTicks: { show: false },
-        },
-        yaxis: {
-            axisBorder: { show: false },
-            axisTicks: { show: false },
-            labels: { style: { colors: "#777" } },
-        },
+        labels: recentYears,
         title: { text: "", align: "left", style: { fontSize: "18px" } },
         };
         var chartBar = new ApexCharts(document.querySelector("#yearly-growth-chart"), optionsBar);

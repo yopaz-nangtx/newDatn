@@ -10,10 +10,6 @@
                     <div class="col-sm-12">
                         <div class="page-sub-header">
                             <h3 class="page-title">Welcome {{ Session::get('name') }}!</h3>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                                <li class="breadcrumb-item active">Teacher</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -26,7 +22,7 @@
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
                                     <h6>Total Classes</h6>
-                                    <h3>04/06</h3>
+                                    <h3>{{ $countClass }}</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img src="{{ URL::to('assets/img/icons/teacher-icon-01.svg') }}" alt="Dashboard Icon">
@@ -41,7 +37,7 @@
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
                                     <h6>Total Students</h6>
-                                    <h3>40/60</h3>
+                                    <h3>{{ $countStudent }}</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img src="{{ URL::to('assets/img/icons/dash-icon-01.svg') }}" alt="Dashboard Icon">
@@ -56,7 +52,7 @@
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
                                     <h6>Total Lessons</h6>
-                                    <h3>30/50</h3>
+                                    <h3>{{ $countLesson }}</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img src="{{ URL::to('assets/img/icons/teacher-icon-02.svg') }}" alt="Dashboard Icon">
@@ -71,7 +67,7 @@
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
                                     <h6>Total Hours</h6>
-                                    <h3>15/20</h3>
+                                    <h3>{{ $countHour }}</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img src="{{ URL::to('assets/img/icons/teacher-icon-03.svg') }}" alt="Dashboard Icon">
@@ -86,7 +82,7 @@
             <div class="row">
                 <div class="col-12 col-lg-12 col-xl-8">
                     <div class="row">
-                        <div class="col-12 col-lg-8 col-xl-8 d-flex">
+                        <div class="col-12 col-lg-12 col-xl-12 d-flex">
                             <div class="card flex-fill comman-shadow">
                                 <div class="card-header">
                                     <div class="row align-items-center">
@@ -118,9 +114,6 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="lesson-confirm">
-                                                            <a href="#">Confirmed</a>
-                                                        </div>
                                                         <button type="submit"
                                                             class="btn btn-info">Reschedule</button>
                                                     </td>
@@ -140,9 +133,6 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="lesson-confirm">
-                                                            <a href="#">Confirmed</a>
-                                                        </div>
                                                         <button type="submit"
                                                             class="btn btn-info">Reschedule</button>
                                                     </td>
@@ -153,27 +143,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-4 col-xl-4 d-flex">
-                            <div class="card flex-fill comman-shadow">
-                                <div class="card-header">
-                                    <div class="row align-items-center">
-                                        <div class="col-12">
-                                            <h5 class="card-title">Semester Progress</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="dash-widget">
-                                    <div class="circle-bar circle-bar1">
-                                        <div class="circle-graph1" data-percent="50">
-                                            <div class="progress-less">
-                                                <b>55/60</b>
-                                                <p>Lesson Progressed</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-12 col-xl-12 d-flex">
@@ -181,7 +151,7 @@
                                 <div class="card-header">
                                     <div class="row align-items-center">
                                         <div class="col-6">
-                                            <h5 class="card-title">Overview Class</h5>
+                                            <h5 class="card-title">Overview Monthly</h5>
                                         </div>
                                         <div class="col-6">
                                             <ul class="chart-list-out">
@@ -194,7 +164,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div id="school-area"></div>
+                                    <div id="teacher-monthly-area"></div>
                                 </div>
                             </div>
                         </div>
@@ -203,12 +173,12 @@
                                 <div class="card-header">
                                     <div class="row align-items-center">
                                         <div class="col-6">
-                                            <h5 class="card-title">In Progress</h5>
+                                            <h5 class="card-title">Overview Yearly</h5>
                                         </div>
                                         <div class="col-6">
                                             <ul class="chart-list-out">
-                                                <li><span class="circle-blue"></span>Happend</li>
-                                                <li><span class="circle-green"></span>All</li>
+                                                <li><span class="circle-blue"></span>Classes</li>
+                                                <li><span class="circle-green"></span>Students</li>
                                                 <li class="star-menus"><a href="javascript:;"><i
                                                             class="fas fa-ellipsis-v"></i></a></li>
                                             </ul>
@@ -216,7 +186,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div id="in-progress-area"></div>
+                                    <div id="teacher-yearly-area"></div>
                                 </div>
                             </div>
                         </div>
@@ -226,11 +196,7 @@
                     <div class="card flex-fill comman-shadow">
                         <div class="card-body">
                             <div id="calendar-doctor" class="calendar-container"></div>
-                            <div class="calendar-info calendar-info1">
-                                <div class="up-come-header">
-                                    <h2>Upcoming Events</h2>
-                                    <span><a href="javascript:;"><i class="feather-plus"></i></a></span>
-                                </div>
+                            <div class="calendar-info1">
                                 <div class="upcome-event-date">
                                     <h3>10 Jan</h3>
                                     <span><i class="fas fa-ellipsis-h"></i></span>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\DashboardController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
@@ -24,18 +25,16 @@ Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth')->group(function () {
+
     // Admin dashboard api 
     Route::prefix('dashboard')->group(function () {
-        Route::get('/monthly/revenue', [ClassController::class, 'monthlyRevenue'])->name('get.monthly-revenue');
-        Route::get('/yearly/revenue', [ClassController::class, 'yearlyRevenue'])->name('get.yearly-revenue');
-        Route::get('/monthly/growth', [ClassController::class, 'monthlyGrowth'])->name('get.monthly-growth');
-        Route::get('/yearly/growth', [ClassController::class, 'yearlyGrowth'])->name('get.yearly-growth');
+        Route::get('/admin', [DashboardController::class, 'admin'])->name('get.admin-dashboard-api');
+        Route::get('/teacher/{id}', [DashboardController::class, 'teacher'])->name('get.teacher-dashboard-api');
     });
 
     // Teacher dashboard api
     
-});
+
 
 Route::middleware('auth')->group(function () {
     // Class

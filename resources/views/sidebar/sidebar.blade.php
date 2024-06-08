@@ -14,7 +14,7 @@
                         </a>
                         <ul>
                             <li><a href="{{ route('home') }}" class="{{set_active(['home'])}}">Admin Dashboard</a></li>
-                            <li><a href="{{ route('teacher/dashboard') }}" class="{{set_active(['teacher/dashboard'])}}">Teacher Dashboard</a></li>
+                            <li><a class="{{ (request()->is('teacher/dashboard/*')) ? 'active' : '' }}">Teacher Dashboard</a></li>
                         </ul>
                     </li>
 
@@ -109,7 +109,7 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul>
-                            <li><a href="{{ route('teacher/dashboard') }}" class="{{set_active(['teacher/dashboard'])}}">Teacher Dashboard</a></li>
+                            <li><a class="{{ (request()->is('teacher/dashboard/*')) ? 'active' : '' }}">Teacher Dashboard</a></li>
                         </ul>
                     </li>
 

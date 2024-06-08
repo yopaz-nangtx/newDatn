@@ -166,31 +166,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12 col-lg-6">
-                <div class="card card-chart">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-6">
-                                <h5 class="card-title">Overview Class</h5>
-                            </div>
-                            <div class="col-6">
-                                <ul class="chart-list-out">
-                                    <li><span class="circle-blue"></span>Happening</li>
-                                    <li><span class="circle-green"></span>Finished</li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="monthly-class-chart"></div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </div>
 </div>
 @endsection

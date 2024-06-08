@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Classroom extends Model
 {
@@ -74,5 +75,15 @@ class Classroom extends Model
     public function revenue() 
     {
         return count($this->students) * $this->fee;
+    }
+
+    public function isFinished()
+    {
+        foreach ($this->lessons as $lesson) {
+            if ($lesson->end_time >= Carbon::now()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
