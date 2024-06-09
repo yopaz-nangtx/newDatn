@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
 use App\Models\Homework;
 use App\Models\HomeworkQuestion;
 use App\Models\Question;
@@ -10,7 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\HomeworkResult;
-
+use App\Models\Lesson;
+use App\Models\LessonHomework;
 
 class HomeworkController extends Controller
 {
@@ -160,12 +162,19 @@ class HomeworkController extends Controller
     public function listApi(Request $request)
     {
         $user = $request->user();
-        $class = ;
-        $homeworks = Homework::with('classroom')->get();
+        $classIds = $user->classrooms->pluck('id');
+        $lessonIds = Lesson::whereIn('classroom_id', $classIds)->pluck('id')->toArray();
+        $homeworkIds = LessonHomework::whereIn('lesson_id', $lessonIds)->pluck('homework_id')->toArray();
+
+        $homeworks = Homework::whereIn('id', $homeworkIds)->get();
         foreach ($homeworks as $homework) {
-            // TODO: fix lại DB
-            $homework['teacher'] = $homework->classroom->teacher->name;
-            $homework['nameClass'] = $homework->classroom->name;
+            $lessonId = LessonHomework::where('homework_id', $homework->id)->first()->lesson_id;
+            $lesson = Lesson::find( $lessonId );
+            $classroom = $lesson->classroom;
+
+            $homework['teacher'] = $classroom->teacher->name;
+            $homework['nameClass'] = $classroom->name;
+
             $homework['assignmentName'] = $homework->homework_name;
             unset($homework['homework_name'], $homework['created_at'], $homework['updated_at']);
             $homeworkResult = HomeworkResult::where('homework_id', $homework->id)

@@ -144,11 +144,12 @@ class ClassController extends Controller
         foreach ($classrooms as $classroom) {
             $classroom['countLessons'] = count($classroom->lessons);
             foreach ($classroom->lessons as $lesson) {
-                $numberOfLessonsStudied += $lesson['is_finished'];
+                $numberOfLessonsStudied += $lesson->isFinished();
                 $attendenceStatus = Attendance::where('lesson_id', $lesson->id)->where('student_id', $request->user()->id)->first()?->status;
                 $lesson['attendenceStatus'] = $attendenceStatus;
             }
             $classroom['numberOfLessonsStudied'] = $numberOfLessonsStudied;
+            $numberOfLessonsStudied = 0;
             unset($classroom['created_at'],$classroom['updated_at']);
         }
 
@@ -163,7 +164,9 @@ class ClassController extends Controller
         foreach ($classrooms as $classroom) {
             $classroom['countLessons'] = count($classroom->lessons);
             foreach ($classroom->lessons as $lesson) {
-                $numberOfLessonsStudied += $lesson['is_finished'];
+                $lesson->startt_time = Carbon::parse($lesson->start_time)->format('d/m/Y H:i:s');
+
+                $numberOfLessonsStudied += $lesson->isFinished();
                 $attendenceStatus = Attendance::where('lesson_id', $lesson->id)->where('student_id', $request->user()->id)->first()?->status;
                 $lesson['attendenceStatus'] = $attendenceStatus;
             }
@@ -216,18 +219,22 @@ class ClassController extends Controller
     public function getTaskApi(Request $request)
     {
         //TODO : sửa lại db
-        $user = User::where('id', $request->user()->id)->with([
-            'classrooms' => [
-                'room',
-                'homeworks' => function (Builder $query) {
-                    $query->whereBetween('end_time', [Carbon::today(), Carbon::today()->addDays(3)]);
-                },
-                'teacher',
-            ],
-        ])->get();
+        $user = User::where('id', $request->user()->id)->first();
+        $classrooms = $user->classrooms;
+        foreach($classrooms as $classroom) {
+            $homeworkClassroom = [];
+            $classroom['teacher'] = $classroom->teacher;
+            $classroom['room'] = $classroom->room;
 
-        $classrooms = $user[0]['classrooms'];
+            foreach($classroom->lessons as $lesson) {
+                foreach($lesson->homeworks as $homework) {
+                    $homeworkClassroom[] = $homework;
+                }
+            }
+            $classroom['homeworks'] = $homeworkClassroom;
+        }
 
         return $classrooms;
+        
     }
 }

@@ -12,16 +12,10 @@ class Homework extends Model
     protected $table = 'homeworks';
 
     protected $fillable = [
-        // 'classroom_id',
         'homework_name',
         'time',
         'end_time',
     ];
-
-    public function classroom()
-    {
-        return $this->belongsTo(Classroom::class, 'classroom_id', 'id');
-    }
 
     public function questions()
     {

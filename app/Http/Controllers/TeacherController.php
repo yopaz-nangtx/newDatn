@@ -193,4 +193,11 @@ class TeacherController extends Controller
 
         return $storagePath;
     }
+
+    public function listApi()
+    {
+        $teachers = User::where('role', 2)->get();
+
+        return $teachers;
+    }
 }
