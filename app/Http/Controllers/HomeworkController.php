@@ -9,6 +9,8 @@ use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\HomeworkResult;
+
 
 class HomeworkController extends Controller
 {
@@ -152,5 +154,61 @@ class HomeworkController extends Controller
 
             return redirect()->route('question/list');
         }
+    }
+
+    // API 
+    public function listApi(Request $request)
+    {
+        $user = $request->user();
+        $class = ;
+        $homeworks = Homework::with('classroom')->get();
+        foreach ($homeworks as $homework) {
+            // TODO: fix lại DB
+            $homework['teacher'] = $homework->classroom->teacher->name;
+            $homework['nameClass'] = $homework->classroom->name;
+            $homework['assignmentName'] = $homework->homework_name;
+            unset($homework['homework_name'], $homework['created_at'], $homework['updated_at']);
+            $homeworkResult = HomeworkResult::where('homework_id', $homework->id)
+                ->where('student_id', $request->user()->id)->orderBy('id', 'desc')
+                ->first();
+            $homework['count_question'] = count($homework->questions);
+            $homework['is_finished'] = $homeworkResult ? $homeworkResult->is_finished : 0;
+            $homework['score'] = $homeworkResult?->score;
+        }
+
+        return $homeworks;
+    }
+
+    public function listQuestionApi(Request $request, $homework_id)
+    {
+        $questions = Homework::find($homework_id)->questions;
+        foreach ($questions as $question) {
+            $question['option'] = [
+                $question->option_1,
+                $question->option_2,
+                $question->option_3,
+                $question->option_4,
+            ];
+            $question['answer'] = $question[$question->answer];
+            unset($question['option_1'],
+                $question['option_2'],
+                $question['option_3'],
+                $question['option_4'],
+                $question['created_at'],
+                $question['updated_at']
+            );
+        }
+
+        return $questions;
+    }
+
+    public function storeResultApi(Request $request)
+    {
+        $request['score'] = $request->count_correct / $request->count_question * 100;
+        $request['is_finished'] = 1;
+        unset($request['count_correct'], $request['count_question']);
+        $resultHomework = HomeworkResult::createOrFirst($request->all());
+
+        return $resultHomework;
     }
 }

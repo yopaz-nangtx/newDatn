@@ -110,11 +110,14 @@
                                             <td>{{ $list->address }}</td>
                                             <td class="text-end">
                                                 <div class="actions">
+                                                    <a href="{{ url('teacher/dashboard/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                        <i class="far fa-eye me-2" title="Overview"></i>
+                                                    </a>
                                                     <a href="{{ url('teacher/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
-                                                        <i class="far fa-edit me-2"></i>
+                                                        <i class="far fa-edit me-2" title="Edit"></i>
                                                     </a>
                                                     <a class="btn btn-sm bg-danger-light teacher_delete" data-bs-toggle="modal" data-bs-target="#teacherDelete">
-                                                        <i class="far fa-trash-alt me-2"></i>
+                                                        <i class="far fa-trash-alt me-2" title="Delete"></i>
                                                     </a>
                                                 </div>
                                             </td>

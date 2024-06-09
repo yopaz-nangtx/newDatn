@@ -21,22 +21,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->prefix('user')->group(function () {
+    Route::get('/', [AuthController::class, 'index'])->name('get.user');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
+    Route::post('/change-info', [AuthController::class, 'changeInfo'])->name('user.change-info');
+    Route::post('/change-pass', [AuthController::class, 'changePassword'])->name('user.change-password');
 });
 
+Route::post('/login', [AuthController::class, 'login']);
 
-    // Admin dashboard api 
-    Route::prefix('dashboard')->group(function () {
-        Route::get('/admin', [DashboardController::class, 'admin'])->name('get.admin-dashboard-api');
-        Route::get('/teacher/{id}', [DashboardController::class, 'teacher'])->name('get.teacher-dashboard-api');
-    });
-
-    // Teacher dashboard api
-    
-
-
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     // Class
     Route::prefix('class')->group(function () {
         Route::get('/list', [ClassController::class, 'getListApi'])->name('get.class-all-api');
@@ -70,3 +64,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [AttendanceController::class, 'storeApi'])->name('get.store-attendance-api');
     });
 });
+
+// Admin dashboard api 
+Route::prefix('dashboard')->group(function () {
+    Route::get('/admin', [DashboardController::class, 'admin'])->name('get.admin-dashboard-api');
+    Route::get('/teacher/{id}', [DashboardController::class, 'teacher'])->name('get.teacher-dashboard-api');
+});
+    

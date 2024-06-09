@@ -113,6 +113,8 @@ class HomeController extends Controller
     /** teacher dashboard */
     public function teacherDashboardIndex($id)
     {
+        $user = User::find($id);
+
         $countStudent = 0;
         $countLesson = 0;
         $teacher = User::find($id);
@@ -124,7 +126,7 @@ class HomeController extends Controller
         }
         $countHour = $countLesson * 2;
 
-        return view('dashboard.teacher_dashboard', compact('countClass', 'countStudent', 'countLesson', 'countHour'));
+        return view('dashboard.teacher_dashboard', compact('countClass', 'countStudent', 'countLesson', 'countHour', 'user'));
     }
 
     /** student dashboard */

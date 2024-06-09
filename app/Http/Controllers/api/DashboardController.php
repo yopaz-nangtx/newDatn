@@ -135,4 +135,61 @@ class DashboardController extends Controller
 
         return $data;
     }
+
+    public function teacherSchedule(Request $request, $id) {
+        $teacher = User::where('id', $id)->where('role', 2)->first();
+
+        $growthStudentMonthly = [];
+        $growthClassMonthly = [];
+        
+        $growthStudentYearly = [];
+        $growthClassYearly = [];
+
+        // CHART MONTHLY
+        $currentMonth = Carbon::now()->month;
+        for ($i = 0; $i < $currentMonth ; $i++) {
+            $countStudent = 0;
+
+            $startOfMonth = now()->subMonth($i)->startOfMonth();
+            $endOfMonth = now()->subMonth($i)->endOfMonth();
+
+            $classes = Classroom::whereDate('created_at', '>=', $startOfMonth)->whereDate('created_at', '<=', $endOfMonth)->where('teacher_id', $teacher->id)->get();
+            foreach($classes as $class)
+            {
+                $countStudent += count($class->students);
+            }
+
+            $growthClassMonthly[] = count($classes);
+            $growthStudentMonthly[] = $countStudent;
+        }
+
+        // CHART YEARLY
+        $currentYear = Carbon::now()->year;
+        for ($i = 0; $i < 6; $i++) {
+            $countStudent = 0;
+            $countClassContinue = 0;
+            $countClassFinished = 0;
+
+            $startOfYear = now()->subYear($i)->startOfYear();
+            $endOfYear = now()->subYear($i)->endOfYear();
+
+            $classes = Classroom::whereDate('created_at', '>=', $startOfYear)->whereDate('created_at', '<=', $endOfYear)->where('teacher_id', $teacher->id)->get();
+            foreach($classes as $class)
+            {
+                $countStudent += count($class->students);
+            }
+
+            $growthClassYearly[] = count($classes);
+            $growthStudentYearly[] = $countStudent;
+        }
+
+        $data = [
+            'growthStudentMonthly' => $growthStudentMonthly,
+            'growthClassMonthly' => $growthClassMonthly,
+            'growthStudentYearly' => $growthStudentYearly,
+            'growthClassYearly' => $growthClassYearly,
+        ];
+
+        return $data;
+    }
 }

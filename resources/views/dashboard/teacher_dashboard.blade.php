@@ -5,12 +5,37 @@
     {!! Toastr::message() !!}
     <div class="page-wrapper">
         <div class="content container-fluid">
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="page-sub-header">
-                            <h3 class="page-title">Welcome {{ Session::get('name') }}!</h3>
-                        </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title d-flex justify-content-between">
+                        <span>Teacher Details</span>
+                        <a class="edit-link"
+                            href="{{ url('teacher/edit/'.$user->id) }}"><i
+                                class="far fa-edit me-1"></i>Edit</a>
+                    </h5>
+                    <div class="row">
+                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Name</p>
+                        <p class="col-sm-9">{{ $user->name }}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Gender</p>
+                        <p class="col-sm-9">{{ $user->genderName() }}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Date of Birth</p>
+                        <p class="col-sm-9">{{ $user->birthday }}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Email</p>
+                        <p class="col-sm-9" style="color: blue">{{ $user->email }}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Mobile</p>
+                        <p class="col-sm-9">{{ $user->phone_number }}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-sm-3 text-muted text-sm-end mb-0">Address</p>
+                        <p class="col-sm-9 mb-0">{{ $user->address }}</p>
                     </div>
                 </div>
             </div>
@@ -82,67 +107,7 @@
             <div class="row">
                 <div class="col-12 col-lg-12 col-xl-8">
                     <div class="row">
-                        <div class="col-12 col-lg-12 col-xl-12 d-flex">
-                            <div class="card flex-fill comman-shadow">
-                                <div class="card-header">
-                                    <div class="row align-items-center">
-                                        <div class="col-6">
-                                            <h5 class="card-title">Upcoming Lesson</h5>
-                                        </div>
-                                        <div class="col-6">
-                                            <span class="float-end view-link"><a href="#">View All
-                                                    Courses</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pt-3 pb-3">
-                                    <div class="table-responsive lesson">
-                                        <table class="table table-center">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="date">
-                                                            <b>Lessons 30</b>
-                                                            <p>3.1 Ipsuum dolor</p>
-                                                            <ul class="teacher-date-list">
-                                                                <li><i class="fas fa-calendar-alt me-2"></i>Sep 5,
-                                                                    2022</li>
-                                                                <li>|</li>
-                                                                <li><i class="fas fa-clock me-2"></i>09:00 - 10:00
-                                                                    am</li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <button type="submit"
-                                                            class="btn btn-info">Reschedule</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="date">
-                                                            <b>Lessons 30</b>
-                                                            <p>3.1 Ipsuum dolor</p>
-                                                            <ul class="teacher-date-list">
-                                                                <li><i class="fas fa-calendar-alt me-2"></i>Sep 5,
-                                                                    2022</li>
-                                                                <li>|</li>
-                                                                <li><i class="fas fa-clock me-2"></i>09:00 - 10:00
-                                                                    am</li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <button type="submit"
-                                                            class="btn btn-info">Reschedule</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         
                     </div>
                     <div class="row">
@@ -229,60 +194,6 @@
                                             <h5>Lorem ipsum sit amet</h5>
                                         </div>
                                         <span>10:00 - 11:00 am</span>
-                                    </div>
-                                </div>
-                                <div class="upcome-event-date">
-                                    <h3>10 Jan</h3>
-                                    <span><i class="fas fa-ellipsis-h"></i></span>
-                                </div>
-                                <div class="calendar-details">
-                                    <p>08:00 am</p>
-                                    <div class="calendar-box normal-bg">
-                                        <div class="calandar-event-name">
-                                            <h4>English</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
-                                        </div>
-                                        <span>08:00 - 09:00 am</span>
-                                    </div>
-                                </div>
-                                <div class="calendar-details">
-                                    <p>09:00 am</p>
-                                    <div class="calendar-box normal-bg">
-                                        <div class="calandar-event-name">
-                                            <h4>Mathematics </h4>
-                                            <h5>Lorem ipsum sit amet</h5>
-                                        </div>
-                                        <span>09:00 - 10:00 am</span>
-                                    </div>
-                                </div>
-                                <div class="calendar-details">
-                                    <p>10:00 am</p>
-                                    <div class="calendar-box normal-bg">
-                                        <div class="calandar-event-name">
-                                            <h4>History</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
-                                        </div>
-                                        <span>10:00 - 11:00 am</span>
-                                    </div>
-                                </div>
-                                <div class="calendar-details">
-                                    <p>11:00 am</p>
-                                    <div class="calendar-box break-bg">
-                                        <div class="calandar-event-name">
-                                            <h4>Break</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
-                                        </div>
-                                        <span>11:00 - 12:00 am</span>
-                                    </div>
-                                </div>
-                                <div class="calendar-details">
-                                    <p>11:30 am</p>
-                                    <div class="calendar-box normal-bg">
-                                        <div class="calandar-event-name">
-                                            <h4>History</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
-                                        </div>
-                                        <span>11:30 - 12:00 am</span>
                                     </div>
                                 </div>
                             </div>

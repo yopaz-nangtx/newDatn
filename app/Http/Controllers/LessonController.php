@@ -198,6 +198,7 @@ class LessonController extends Controller
         return view('lesson.homework', compact('lesson', 'studentRenders'));
     }
 
+    //API 
     public function detailApi(Request $request, $lesson_id)
     {
         $lesson = Lesson::where('id', $request->lesson_id)->with(['classroom', 'room'])->first();
