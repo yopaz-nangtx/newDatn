@@ -163,8 +163,18 @@
                             <div id="calendar-doctor" class="calendar-container"></div>
                             <div class="calendar-info1">
                                 <div class="upcome-event-date">
-                                    <h3>10 Jan</h3>
+                                    <h3>9 Jun</h3>
                                     <span><i class="fas fa-ellipsis-h"></i></span>
+                                </div>
+                                <div class="calendar-details">
+                                    <p>06:00 am</p>
+                                    <div class="calendar-box normal-bg">
+                                        <div class="calandar-event-name">
+                                            <h4>Botony</h4>
+                                            <h5>Lorem ipsum sit amet</h5>
+                                        </div>
+                                        <span>06:00 - 08:00 am</span>
+                                    </div>
                                 </div>
                                 <div class="calendar-details">
                                     <p>08:00 am</p>
@@ -173,17 +183,7 @@
                                             <h4>Botony</h4>
                                             <h5>Lorem ipsum sit amet</h5>
                                         </div>
-                                        <span>08:00 - 09:00 am</span>
-                                    </div>
-                                </div>
-                                <div class="calendar-details">
-                                    <p>09:00 am</p>
-                                    <div class="calendar-box normal-bg">
-                                        <div class="calandar-event-name">
-                                            <h4>Botony</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
-                                        </div>
-                                        <span>09:00 - 10:00 am</span>
+                                        <span>08:00 - 10:00 am</span>
                                     </div>
                                 </div>
                                 <div class="calendar-details">
@@ -193,7 +193,7 @@
                                             <h4>Botony</h4>
                                             <h5>Lorem ipsum sit amet</h5>
                                         </div>
-                                        <span>10:00 - 11:00 am</span>
+                                        <span>10:00 - 12:00 am</span>
                                     </div>
                                 </div>
                             </div>

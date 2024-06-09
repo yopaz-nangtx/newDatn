@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -56,8 +57,22 @@ class AuthController extends Controller
     }
 
     // API
-    public function changeInfo(UpdateInfoUserRequest $request)
+    public function changeInfo(Request $request)
     {
+        $user = User::find($request->id);
+
+        $request->validate([
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($user->email, 'email'),
+            ],
+            'name' => 'required|string',
+            'phone_number' => 'required|string|regex:/^0\d{9,10}$/',
+            'birthday' => 'required|before:today',
+            'address' => 'required|string',
+        ]);
+
         return User::where('id', $request->user()->id)->update($request->all());
     }
 
