@@ -9,7 +9,7 @@
                         <div class="page-sub-header">
                             <h3 class="page-title">Class Detail</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('class/list') }}">Class</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('lesson/list/' . $class->id) }}">Class Detail</a></li>
                                 <li class="breadcrumb-item active">All Classes</li>
                             </ul>
                         </div>
@@ -91,7 +91,7 @@
                                             <td>{{ $list->start_time }}</td>
                                             <td class="text-end">
                                                 <div class="actions">
-                                                    <a href="{{ url('lesson/homework/'.$list->id) }}" class="btn btn-sm bg-danger-light {{ $list->is_finished ? 'disabled-link' : '' }}" title="Attendance">
+                                                    <a href="{{ url('lesson/homework/'.$list->id) }}" class="btn btn-sm bg-danger-light {{ $list->is_finished ? 'disabled-link' : '' }}" title="Homework">
                                                         <i class="fas fa-book me-2"></i>
                                                     </a>
                                                     <a href="{{ url('lesson/attendance/'.$list->id) }}" class="btn btn-sm bg-danger-light {{ $list->is_finished ? 'disabled-link' : '' }}" title="Attendance">

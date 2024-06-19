@@ -29,14 +29,6 @@ class TeacherController extends Controller
         return view('teacher.list-teachers', compact('listTeacher'));
     }
 
-    /** teacher Grid */
-    public function teacherGrid()
-    {
-        $teacherGrid = User::where('role', 2)->get();
-
-        return view('teacher.teachers-grid', compact('teacherGrid'));
-    }
-
     /** save record */
     public function saveRecord(Request $request)
     {
@@ -65,7 +57,9 @@ class TeacherController extends Controller
             $user->birthday = Carbon::createFromFormat('Y-m-d', $request['birthday']);
             $user->role = $request['role'];
             $user->password = $request['password'];
-            $user->image_url = $request['image_url'];
+            $user->save();
+
+            $user->image_url = $user->uploadFile($request->file('image'), $user->id);
             $user->save();
 
             Toastr::success('Has been add successfully', 'Success');
@@ -109,7 +103,7 @@ class TeacherController extends Controller
 
         DB::beginTransaction();
         try {
-            unset($request['_token'], $request['_method']);
+             unset($request['_token'], $request['_method']);
             if ($request->file('image')) {
                 $request['image_url'] = $this->upload($request);
             }
@@ -123,7 +117,8 @@ class TeacherController extends Controller
             $user->address = $request['address'];
             $user->phone_number = $request['phone_number'];
             $user->birthday = Carbon::createFromFormat('Y-m-d', $request['birthday']);
-            $user->image_url = $request['image_url'];
+            $user->save();
+            $user->image_url = $user->uploadFile($request->file('image'), $user->id);
             $user->save();
 
             Toastr::success('Has been update successfully', 'Success');
@@ -194,10 +189,13 @@ class TeacherController extends Controller
         return $storagePath;
     }
 
+    // API
     public function listApi()
     {
         $teachers = User::where('role', 2)->get();
 
         return $teachers;
     }
+
+
 }

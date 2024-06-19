@@ -20,14 +20,6 @@ class StudentController extends Controller
         return view('student.student', compact('studentList'));
     }
 
-    /** index page student grid */
-    public function studentGrid()
-    {
-        $studentList = User::where('role', 3)->orderBy('id', 'desc')->get();
-
-        return view('student.student-grid', compact('studentList'));
-    }
-
     /** student add page */
     public function studentAdd()
     {
@@ -51,7 +43,6 @@ class StudentController extends Controller
         try {
             $request['role'] = 3;
             $request['password'] = Hash::make('password');
-            // $request['image_url'] = $this->upload($request);
 
             $user = new User;
             $user->name = $request['name'];

@@ -7,10 +7,10 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Homework result</h3>
+                            <h3 class="page-title">Homework Result</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('class/list') }}">Class</a></li>
-                                <li class="breadcrumb-item active">All Classes</li>
+                                <li class="breadcrumb-item active">Homework Result</li>
                             </ul>
                         </div>
                     </div>

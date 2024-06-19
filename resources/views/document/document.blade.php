@@ -52,9 +52,6 @@
                                         <h3 class="page-title">Documents</h3>
                                     </div>
                                     <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <a href="{{ route('document/list') }}" class="btn btn-outline-gray me-2 active">
-                                            <i class="fa fa-list" aria-hidden="true"></i>
-                                        </a>
                                         <form action="{{ route('document/upload') }}" method="post" enctype="multipart/form-data" style="display: contents;">
                                             @csrf
                                             <label for="fileUpload" class="btn btn-dark btn-primary">

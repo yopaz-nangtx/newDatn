@@ -10,7 +10,7 @@
                             <h3 class="page-title">Attendance</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('class/list') }}">Class</a></li>
-                                <li class="breadcrumb-item active">All Classes</li>
+                                <li class="breadcrumb-item active">Attendance</li>
                             </ul>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Mobile Number</th>
-                                            <th>Address</th>
+                                            <th>Email</th>
                                             <th>Reason</th>
                                             <th>Created at</th>
                                         </tr>
@@ -92,7 +92,7 @@
                                                 </h2>
                                             </td>
                                             <td>{{ $list->phone_number }}</td>
-                                            <td>{{ $list->address }}</td>
+                                            <td>{{ $list->email }}</td>
                                             <td>{{ $list->attendance?->reason }}</td>
                                             <td>{{ $list->attendance?->created_at }}</td>
                                         </tr>
