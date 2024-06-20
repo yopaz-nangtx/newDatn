@@ -7,7 +7,6 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Question</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('question/list') }}">Question</a></li>
                                 <li class="breadcrumb-item active">All Questions</li>
@@ -18,27 +17,6 @@
             </div>
             {{-- message --}}
             {!! Toastr::message() !!}
-            <div class="question-group-form">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search by Question ....">
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search by Answer ...">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="search-question-btn">
-                            <button type="btn" class="btn btn-primary">Search</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card card-table comman-shadow">

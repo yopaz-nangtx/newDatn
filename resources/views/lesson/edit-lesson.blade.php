@@ -90,6 +90,24 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Homeworks <span class="login-danger">*</span></label>
+                                            <select class="multi-homework form-control @error('homeworks') is-invalid @enderror" name="homeworks[]" multiple="multiple">
+                                                @foreach ($homeworks as $homework)
+                                                <option value="{{ $homework->id }}" {{ $homeworkIds->contains($homework->id) ? 'selected' : ''}}>
+                                                    {{ $homework->homework_name }}
+                                                </option>
+                                            @endforeach
+                                            </select>
+                                            @error('homeworks')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror                                            
+                                        </div>
+                                    </div>
+
                                     <div class="col-12">
                                         <div class="class-submit">
                                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -103,6 +121,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.multi-homework').select2();
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
