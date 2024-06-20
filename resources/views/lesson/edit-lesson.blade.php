@@ -92,15 +92,15 @@
 
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Homeworks <span class="login-danger">*</span></label>
-                                            <select class="multi-homework form-control @error('homeworks') is-invalid @enderror" name="homeworks[]" multiple="multiple">
-                                                @foreach ($homeworks as $homework)
-                                                <option value="{{ $homework->id }}" {{ $homeworkIds->contains($homework->id) ? 'selected' : ''}}>
-                                                    {{ $homework->homework_name }}
+                                            <label>Documents <span class="login-danger">*</span></label>
+                                            <select class="multi-document form-control @error('documents') is-invalid @enderror" name="documents[]" multiple="multiple">
+                                                @foreach ($documents as $document)
+                                                <option value="{{ $document->id }}" {{ $documentIds->contains($document->id) ? 'selected' : ''}}>
+                                                    {{ $document->name }}
                                                 </option>
                                             @endforeach
                                             </select>
-                                            @error('homeworks')
+                                            @error('documents')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -130,7 +130,7 @@
 
     <script>
         $(document).ready(function() {
-            $('.multi-homework').select2();
+            $('.multi-document').select2();
         });
     </script>
 @endsection

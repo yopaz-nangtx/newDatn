@@ -63,11 +63,13 @@ class ClassController extends Controller
             $classroom->fee = $request['fee'];
             $classroom->save();
 
-            foreach ($request->students as $studentId) {
-                ClassroomStudent::create([
-                    'classroom_id' => $classroom->id,
-                    'student_id' => $studentId,
-                ]);
+            if(isset($request->students)) {
+                foreach ($request->students as $studentId) {
+                    ClassroomStudent::create([
+                        'classroom_id' => $classroom->id,
+                        'student_id' => $studentId,
+                    ]);
+                }
             }
 
             Toastr::success('Has been add successfully', 'Success');
@@ -115,11 +117,13 @@ class ClassController extends Controller
             foreach ($classroom->classroomStudents as $classroomStudent) {
                 $classroomStudent->delete();
             }
-            foreach ($request->students as $studentId) {
-                ClassroomStudent::create([
-                    'classroom_id' => $classroom->id,
-                    'student_id' => $studentId,
-                ]);
+            if(isset($request->students)) {
+                foreach ($request->students as $studentId) {
+                    ClassroomStudent::create([
+                        'classroom_id' => $classroom->id,
+                        'student_id' => $studentId,
+                    ]);
+                }
             }
 
             Toastr::success('Has been add successfully', 'Success');

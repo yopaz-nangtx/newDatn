@@ -87,6 +87,22 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Documents <span class="login-danger">*</span></label>
+                                            <select class="form-control multi-document @error('documents') is-invalid @enderror" name="documents[]" multiple="multiple">
+                                                @foreach ($documents as $document)
+                                                    <option value="{{ $document->id }}"><span style="font-size: bold">{{ $document->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('documents')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror                                            
+                                        </div>
+                                    </div>
+
                                     <div class="col-12">
                                         <div class="class-submit">
                                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -104,6 +120,12 @@
     <script>
         $(document).ready(function() {
             $('.multi-homework').select2();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.multi-document').select2();
         });
     </script>
 @endsection

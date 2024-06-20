@@ -54,11 +54,13 @@ class HomeworkController extends Controller
             $homework->end_time = $dateTime;
             $homework->save();
 
-            foreach ($request->questions as $questionId) {
-                HomeworkQuestion::create([
-                    'homework_id' => $homework->id,
-                    'question_id' => $questionId,
-                ]);
+            if(isset($request->questions)) {
+                foreach ($request->questions as $questionId) {
+                    HomeworkQuestion::create([
+                        'homework_id' => $homework->id,
+                        'question_id' => $questionId,
+                    ]);
+                }
             }
 
             Toastr::success('Has been add successfully', 'Success');
@@ -116,11 +118,13 @@ class HomeworkController extends Controller
             }
             $homework->save();
 
-            foreach ($request->questions as $questionId) {
-                HomeworkQuestion::create([
-                    'homework_id' => $homework->id,
-                    'question_id' => $questionId,
-                ]);
+            if(isset($request->questions)) {
+                foreach ($request->questions as $questionId) {
+                    HomeworkQuestion::create([
+                        'homework_id' => $homework->id,
+                        'question_id' => $questionId,
+                    ]);
+                }
             }
 
             Toastr::success('Has been update successfully', 'Success');

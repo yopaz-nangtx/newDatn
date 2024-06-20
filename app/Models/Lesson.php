@@ -28,6 +28,11 @@ class Lesson extends Model
         return $this->belongsTo(Classroom::class, 'classroom_id', 'id');
     }
 
+    public function lessonDocuments()
+    {
+        return $this->hasMany(DocumentLesson::class, 'lesson_id', 'id');
+    }
+
     public function documents()
     {
         return $this->belongsToMany(Document::class, 'document_lessons', 'lesson_id', 'document_id');

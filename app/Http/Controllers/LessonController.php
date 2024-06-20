@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Classroom;
-use App\Models\ClassroomStudent;
+use App\Models\Document;
+use App\Models\DocumentLesson;
 use App\Models\Homework;
 use App\Models\HomeworkResult;
 use App\Models\Room;
@@ -36,8 +37,9 @@ class LessonController extends Controller
     {
         $class = Classroom::findOrFail($id);
         $homeworks = Homework::all();
+        $documents = Document::all();
 
-        return view('lesson.add-lesson', compact('class', 'homeworks'));
+        return view('lesson.add-lesson', compact('class', 'homeworks', 'documents'));
     }
 
     /** homework save record */
@@ -62,11 +64,22 @@ class LessonController extends Controller
             $lesson->end_time = $endTime;
             $lesson->save();
 
-            foreach ($request->homeworks as $homeworkId) {
-                LessonHomework::create([
-                    'homework_id' => $homeworkId,
-                    'lesson_id' => $lesson->id,
-                ]);
+            if(isset($request->homeworks)) {
+                foreach ($request->homeworks as $homeworkId) {
+                    LessonHomework::create([
+                        'homework_id' => $homeworkId,
+                        'lesson_id' => $lesson->id,
+                    ]);
+                }
+            }
+
+            if(isset($request->documents)) {
+                foreach ($request->documents as $documentId) {
+                    DocumentLesson::create([
+                        'document_id' => $documentId,
+                        'lesson_id' => $lesson->id,
+                    ]);
+                }
             }
 
             Toastr::success('Has been add successfully', 'Success');
@@ -89,8 +102,10 @@ class LessonController extends Controller
         $startTime = $dateTime->format('H:i');
         $homeworks = Homework::all();
         $homeworkIds = $lesson->homeworks->pluck('id');
+        $documents = Document::all();
+        $documentIds = $lesson->documents->pluck('id');
 
-        return view('lesson.edit-lesson', compact('class', 'lesson', 'homeworks', 'homeworkIds', 'startDate', 'startTime'));
+        return view('lesson.edit-lesson', compact('class', 'lesson', 'homeworks', 'homeworkIds', 'documents', 'documentIds', 'startDate', 'startTime'));
     }
 
     /** homework save record */
@@ -119,11 +134,25 @@ class LessonController extends Controller
                 $lessonHomework->delete();
             }
 
-            foreach ($request->homeworks as $homeworkId) {
-                LessonHomework::create([
-                    'homework_id' => $homeworkId,
-                    'lesson_id' => $lesson->id,
-                ]);
+            if(isset($request->homeworks)) {
+                foreach ($request->homeworks as $homeworkId) {
+                    LessonHomework::create([
+                        'homework_id' => $homeworkId,
+                        'lesson_id' => $lesson->id,
+                    ]);
+                }
+            }
+
+            foreach ($lesson->lessonDocuments as $lessonDocument) {
+                $lessonDocument->delete();
+            }
+            if(isset($request->documents)) {
+                foreach ($request->documents as $documentId) {
+                    DocumentLesson::create([
+                        'document_id' => $documentId,
+                        'lesson_id' => $lesson->id,
+                    ]);
+                }
             }
 
             Toastr::success('Has been add successfully', 'Success');

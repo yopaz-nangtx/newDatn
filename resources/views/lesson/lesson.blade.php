@@ -76,7 +76,7 @@
                                             <td>
                                                 @if (count($list->documents) > 0)
                                                     @foreach ($list->documents as $document)
-                                                        {{ $document->document_name }} <br>
+                                                        {{ $document->name }} <br>
                                                     @endforeach
                                                 @else
                                                     No documents found

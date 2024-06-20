@@ -129,9 +129,4 @@ class HomeController extends Controller
         return view('dashboard.teacher_dashboard', compact('countClass', 'countStudent', 'countLesson', 'countHour', 'user'));
     }
 
-    /** student dashboard */
-    public function studentDashboardIndex()
-    {
-        return view('dashboard.student_dashboard');
-    }
 }
