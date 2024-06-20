@@ -79,7 +79,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     // ------------------------ student -------------------------------//
     Route::controller(StudentController::class)->group(function () {
         Route::get('student/list', 'student')->middleware('auth')->name('student/list'); // list student
-        Route::get('student/grid', 'studentGrid')->middleware('auth')->name('student/grid'); // grid student
         Route::get('student/add/page', 'studentAdd')->middleware('auth')->name('student/add/page'); // page student
         Route::post('student/add/save', 'studentSave')->name('student/add/save'); // save record student
         Route::get('student/edit/{id}', 'studentEdit'); // view for edit
@@ -91,7 +90,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::controller(TeacherController::class)->group(function () {
         Route::get('teacher/add/page', 'teacherAdd')->middleware('auth')->name('teacher/add/page'); // page teacher
         Route::get('teacher/list/page', 'teacherList')->middleware('auth')->name('teacher/list/page'); // page teacher
-        Route::get('teacher/grid/page', 'teacherGrid')->middleware('auth')->name('teacher/grid/page'); // page grid teacher
         Route::post('teacher/save', 'saveRecord')->middleware('auth')->name('teacher/save'); // save record
         Route::get('teacher/edit/{user_id}', 'editRecord'); // view teacher record
         Route::post('teacher/update', 'updateRecordTeacher')->middleware('auth')->name('teacher/update'); // update record
@@ -131,8 +129,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     // ------------------------ document -------------------------------//
     Route::controller(DocumentController::class)->group(function () {
         Route::get('document/list', 'document')->middleware('auth')->name('document/list'); // list document
+        Route::get('document/add/page', 'documentAdd')->middleware('auth')->name('document/add/page'); // page document
         Route::post('document/upload', 'documentUpload')->middleware('auth')->name('document/upload'); // page document
-        Route::get('document/download/{id}', 'documentDownload')->middleware('auth')->name('document/download'); // page document
         Route::post('document/delete', 'documentDelete')->name('document/delete'); // delete record document
     });
 

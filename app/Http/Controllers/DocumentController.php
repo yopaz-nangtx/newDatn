@@ -19,16 +19,23 @@ class DocumentController extends Controller
         return view('document.document', compact('documentList'));
     }
 
+    public function documentAdd()
+    {
+        return view('document.add-document');
+    }
+
     /** document add page */
     public function documentUpload(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:doc,pdf,docx',
+            'name' => 'required|string'
         ]);
 
         DB::beginTransaction();
         try {
             $document = new Document;
+            $document->name = $request['name'];
             $document->link_url = "";
             $document->save();
 

@@ -97,6 +97,7 @@
                         </a>
                         <ul>
                             <li><a href="{{ route('document/list') }}"  class="{{set_active(['document/list'])}}">Document List</a></li>
+                            <li><a href="{{ route('document/add/page') }}" class="{{set_active(['document/add/page'])}}">Document Add</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -156,6 +157,7 @@
                         </a>
                         <ul>
                             <li><a href="{{ route('document/list') }}"  class="{{set_active(['document/list'])}}">Document List</a></li>
+                            <li><a href="{{ route('document/add/page') }}" class="{{set_active(['document/add/page'])}}">Document Add</a></li>
                         </ul>
                     </li>
                 </ul>

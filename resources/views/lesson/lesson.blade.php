@@ -28,7 +28,6 @@
                                         <h3 class="page-title">Class Detail</h3>
                                     </div>
                                     <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
                                         <a href="{{ url('lesson/add/page/' . $class->id) }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
@@ -46,8 +45,9 @@
                                             </th>
                                             <th>ID</th>
                                             <th>Lesson Name</th>
-                                            <th>Count Homework</th>
                                             <th>Time</th>
+                                            <th>Homework</th>
+                                            <th>Document</th>
                                             <th class="text-end">Action</th>
                                         </tr>
                                     </thead>
@@ -63,8 +63,25 @@
                                             <td hidden class="id">{{ $list->id }}</td>
                                             <td hidden class="avatar">{{ $list->upload }}</td>
                                             <td>{{ $list->lesson_name }}</td>
-                                            <td>{{ count($list->homeworks) }}</td>
                                             <td>{{ $list->start_time }}</td>
+                                            <td>
+                                                @if (count($list->homeworks) > 0)
+                                                    @foreach ($list->homeworks as $homework)
+                                                        {{ $homework->homework_name }} <br>
+                                                    @endforeach
+                                                @else
+                                                    No homeworks found
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (count($list->documents) > 0)
+                                                    @foreach ($list->documents as $document)
+                                                        {{ $document->document_name }} <br>
+                                                    @endforeach
+                                                @else
+                                                    No documents found
+                                                @endif
+                                            </td>
                                             <td class="text-end">
                                                 <div class="actions">
                                                     <a href="{{ url('lesson/homework/'.$list->id) }}" class="btn btn-sm bg-danger-light {{ $list->is_finished ? 'disabled-link' : '' }}" title="Homework">

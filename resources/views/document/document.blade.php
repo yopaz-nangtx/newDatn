@@ -27,17 +27,11 @@
                                         <h3 class="page-title">Documents</h3>
                                     </div>
                                     <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <form action="{{ route('document/upload') }}" method="post" enctype="multipart/form-data" style="display: contents;">
-                                            @csrf
-                                            <label for="fileUpload" class="btn btn-dark btn-primary">
-                                                <i class="fas fa-upload me-2"></i> Upload
-                                            </label>
-                                            <input type="file" id="fileUpload" style="display: none;" name="file">
-                                            <input type="submit" id="submitBtn" style="display: none;">
-                                        </form>
+                                        <a href="{{ route('document/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
+                            
 
                             <div class="table-responsive">
                                 <table
@@ -66,7 +60,7 @@
                                             <td>{{ ++$key }}</td>
                                             <td hidden class="id">{{ $list->id }}</td>
                                             <td hidden class="avatar">{{ $list->upload }}</td>
-                                            <td>{{ $list->link_url }}</td>
+                                            <td>{{ $list->name }}</td>
                                             <td>{{ $list->created_at }}</td>
                                             <td class="text-end">
                                                 <div class="actions">
