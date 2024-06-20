@@ -41,7 +41,6 @@
                                             </th>
                                             <th>ID</th>
                                             <th>Name</th>
-                                            <th>Gender</th>
                                             <th>DOB</th>
                                             <th>Mobile Number</th>
                                             <th>Address</th>
@@ -72,8 +71,7 @@
                                                     <a href="teacher-details.html">{{ $list->name }}</a>
                                                 </h2>
                                             </td>
-                                            <td>{{ $list->genderName() }}</td>
-                                            <td>{{ $list->birthday }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($list->birthday)->format('d/m/Y') }}</td>
                                             <td>{{ $list->phone_number }}</td>
                                             <td>{{ $list->address }}</td>
                                             <td class="text-end">

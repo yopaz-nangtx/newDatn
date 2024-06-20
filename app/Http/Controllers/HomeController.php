@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\Lesson;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -114,6 +115,7 @@ class HomeController extends Controller
     public function teacherDashboardIndex($id)
     {
         $user = User::find($id);
+        $today = Carbon::today();
 
         $countStudent = 0;
         $countLesson = 0;
@@ -126,7 +128,13 @@ class HomeController extends Controller
         }
         $countHour = $countLesson * 2;
 
-        return view('dashboard.teacher_dashboard', compact('countClass', 'countStudent', 'countLesson', 'countHour', 'user'));
+        $classrooms = Classroom::where('teacher_id', $id)
+            ->with(['lessons' => function ($query) use ($today) {
+                $query->whereDate('start_time', '=', $today);
+            }])
+            ->get();
+
+        return view('dashboard.teacher_dashboard', compact('countClass', 'countStudent', 'countLesson', 'countHour', 'user', 'classrooms', 'today'));
     }
 
 }

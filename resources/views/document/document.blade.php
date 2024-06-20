@@ -61,7 +61,7 @@
                                             <td hidden class="id">{{ $list->id }}</td>
                                             <td hidden class="avatar">{{ $list->upload }}</td>
                                             <td>{{ $list->name }}</td>
-                                            <td>{{ $list->created_at }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($list->created_at)->format('d/m/Y H:i') }}</td>
                                             <td class="text-end">
                                                 <div class="actions">
                                                     <a href="{{ $list->link_url }}" class="btn btn-sm bg-danger-light" target="_blank">

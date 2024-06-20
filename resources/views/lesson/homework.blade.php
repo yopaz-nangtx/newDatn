@@ -65,7 +65,7 @@
                                             <td>{{ count($list->homeworkResult?->homework?->questions) }}</td>
                                             <td>{{ floor(count($list->homeworkResult?->homework?->questions) * $list->homeworkResult?->score / 100) }}</td>
                                             <td>{{ $list->homeworkResult?->score ?? '0' }}</td>
-                                            <td>{{ $list->homeworkResult?->created_at ?? '' }}</td>
+                                            <td>{{ $list->homeworkResult?->created_at ? \Carbon\Carbon::parse($list->homeworkResult?->created_at)->format('d/m/Y H:i') : '' }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

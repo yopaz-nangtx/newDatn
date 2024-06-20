@@ -67,7 +67,7 @@
                                             </td>
                                             <td>{{ count($list->questions) }}</td>
                                             <td>{{ $list->time }}</td>
-                                            <td>{{ $list->end_time }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($list->end_time)->format('d/m/Y H:i') }}</td>
                                             <td class="text-end">
                                                 <div class="actions">
                                                     <a href="{{ url('homework/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">

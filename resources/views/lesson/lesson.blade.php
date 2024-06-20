@@ -63,7 +63,7 @@
                                             <td hidden class="id">{{ $list->id }}</td>
                                             <td hidden class="avatar">{{ $list->upload }}</td>
                                             <td>{{ $list->lesson_name }}</td>
-                                            <td>{{ $list->start_time }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($list->start_time)->format('d/m/Y H:i') }}</td>
                                             <td>
                                                 @if (count($list->homeworks) > 0)
                                                     @foreach ($list->homeworks as $homework)

@@ -17,6 +17,11 @@ class Lesson extends Model
         'end_time',
     ];
 
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+    ];
+    
     // 1 class - 1 room
     public function room()
     {

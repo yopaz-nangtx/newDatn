@@ -23,7 +23,7 @@
                     </div>
                     <div class="row">
                         <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Date of Birth</p>
-                        <p class="col-sm-9">{{ $user->birthday }}</p>
+                        <p class="col-sm-9">{{ \Carbon\Carbon::parse($user->birthday)->format('d/m/Y') }}</p>
                     </div>
                     <div class="row">
                         <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Email</p>
@@ -162,41 +162,26 @@
                         <div class="card-body">
                             <div id="calendar-doctor" class="calendar-container"></div>
                             <div class="calendar-info1">
-                                <div class="upcome-event-date">
-                                    <h3>9 Jun</h3>
-                                    <span><i class="fas fa-ellipsis-h"></i></span>
-                                </div>
-                                <div class="calendar-details">
-                                    <p>06:00 am</p>
-                                    <div class="calendar-box normal-bg">
-                                        <div class="calandar-event-name">
-                                            <h4>Botony</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                @foreach($classrooms as $classroom)
+                                    @foreach($classroom->lessons as $lesson)
+                                        <div class="upcome-event-date">
+                                            <h3>{{ $today->format('j M') }}</h3>
+                                            <span><i class="fas fa-ellipsis-h"></i></span>
                                         </div>
-                                        <span>06:00 - 08:00 am</span>
-                                    </div>
-                                </div>
-                                <div class="calendar-details">
-                                    <p>08:00 am</p>
-                                    <div class="calendar-box normal-bg">
-                                        <div class="calandar-event-name">
-                                            <h4>Botony</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                        <div class="calendar-details">
+                                            <p>{{ $lesson->start_time->format('h:i a') }}</p>
+                                            <div class="calendar-box normal-bg">
+                                                <div class="calandar-event-name">
+                                                    <h4>{{ $classroom->name }}</h4>
+                                                    <h5>{{ $classroom->room->name }}</h5>
+                                                </div>
+                                                <span>{{ $lesson->start_time->format('h:i a') }} - {{ $lesson->end_time->format('h:i a') }}</span>
+                                            </div>
                                         </div>
-                                        <span>08:00 - 10:00 am</span>
-                                    </div>
-                                </div>
-                                <div class="calendar-details">
-                                    <p>10:00 am</p>
-                                    <div class="calendar-box normal-bg">
-                                        <div class="calandar-event-name">
-                                            <h4>Botony</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
-                                        </div>
-                                        <span>10:00 - 12:00 am</span>
-                                    </div>
-                                </div>
+                                    @endforeach
+                                @endforeach
                             </div>
+                            
                         </div>
                     </div>
                 </div>
