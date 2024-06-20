@@ -41,7 +41,6 @@ class HomeworkController extends Controller
             'end_time' => 'required',
             'questions' => 'required',
         ]);
-        // dd($request->all());
 
         DB::beginTransaction();
         try {
