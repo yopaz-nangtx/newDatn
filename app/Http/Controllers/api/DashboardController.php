@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Classroom;
+use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -136,60 +137,36 @@ class DashboardController extends Controller
         return $data;
     }
 
-    public function teacherSchedule(Request $request, $id) {
-        $teacher = User::where('id', $id)->where('role', 2)->first();
+    public function scheduleTeacher($id, Request $request) {
+        try {
+            $selectedDate = $request->query('date'); 
+            $formattedDate = Carbon::parse($selectedDate)->toDateString(); 
 
-        $growthStudentMonthly = [];
-        $growthClassMonthly = [];
-        
-        $growthStudentYearly = [];
-        $growthClassYearly = [];
-
-        // CHART MONTHLY
-        $currentMonth = Carbon::now()->month;
-        for ($i = 0; $i < $currentMonth ; $i++) {
-            $countStudent = 0;
-
-            $startOfMonth = now()->subMonth($i)->startOfMonth();
-            $endOfMonth = now()->subMonth($i)->endOfMonth();
-
-            $classes = Classroom::whereDate('created_at', '>=', $startOfMonth)->whereDate('created_at', '<=', $endOfMonth)->where('teacher_id', $teacher->id)->get();
-            foreach($classes as $class)
-            {
-                $countStudent += count($class->students);
+            $classrooms = Classroom::where('teacher_id', $id)
+                ->with(['lessons' => function ($query) use ($formattedDate) {
+                    $query->whereDate('start_time', '=', $formattedDate);
+                }])
+                ->get();
+                
+            $formattedData = [];
+            foreach ($classrooms as $classroom) {
+                foreach ($classroom->lessons as $lesson) {
+                    $formattedLessons[] = [
+                        'startTime' => $lesson->start_time->format('Y-m-d H:i:s'),
+                        'endTime' => $lesson->end_time->format('Y-m-d H:i:s'),
+                    ];
+                }
+                $formattedData[] = [
+                    'classroomName' => $classroom->name,
+                    'roomName' => $classroom->room->name,
+                    'lessons' => $classroom->lessons,
+                ];
             }
-
-            $growthClassMonthly[] = count($classes);
-            $growthStudentMonthly[] = $countStudent;
+    
+            return response()->json(['id' => $id, 'classrooms' => $formattedData]);
+    
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch teacher lessons.'], 500);
         }
-
-        // CHART YEARLY
-        $currentYear = Carbon::now()->year;
-        for ($i = 0; $i < 6; $i++) {
-            $countStudent = 0;
-            $countClassContinue = 0;
-            $countClassFinished = 0;
-
-            $startOfYear = now()->subYear($i)->startOfYear();
-            $endOfYear = now()->subYear($i)->endOfYear();
-
-            $classes = Classroom::whereDate('created_at', '>=', $startOfYear)->whereDate('created_at', '<=', $endOfYear)->where('teacher_id', $teacher->id)->get();
-            foreach($classes as $class)
-            {
-                $countStudent += count($class->students);
-            }
-
-            $growthClassYearly[] = count($classes);
-            $growthStudentYearly[] = $countStudent;
-        }
-
-        $data = [
-            'growthStudentMonthly' => $growthStudentMonthly,
-            'growthClassMonthly' => $growthClassMonthly,
-            'growthStudentYearly' => $growthStudentYearly,
-            'growthClassYearly' => $growthClassYearly,
-        ];
-
-        return $data;
-    }
+    }    
 }

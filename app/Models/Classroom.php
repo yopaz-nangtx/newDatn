@@ -56,11 +56,6 @@ class Classroom extends Model
         return $this->hasMany(Exam::class, 'classroom_id', 'id');
     }
 
-    // 1 class - n homework
-    // public function homeworks()
-    // {
-    //     return $this->hasMany(Homework::class, 'classroom_id', 'id');
-    // }
 
     public function classroomStudents()
     {

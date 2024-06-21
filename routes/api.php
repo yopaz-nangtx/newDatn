@@ -69,5 +69,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('dashboard')->group(function () {
     Route::get('/admin', [DashboardController::class, 'admin'])->name('get.admin-dashboard-api');
     Route::get('/teacher/{id}', [DashboardController::class, 'teacher'])->name('get.teacher-dashboard-api');
+    Route::get('/schedule/teacher/{id}', [DashboardController::class, 'scheduleTeacher'])->name('get.teacher-dashboard-api');
 });
     
