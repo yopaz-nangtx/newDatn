@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Classroom extends Model
 {
@@ -56,20 +56,39 @@ class Classroom extends Model
         return $this->hasMany(Exam::class, 'classroom_id', 'id');
     }
 
-
     public function classroomStudents()
     {
         return $this->hasMany(ClassroomStudent::class, 'classroom_id', 'id');
     }
 
-    public function countStudent() 
+    public function countStudent()
     {
         return count($this->students);
     }
 
-    public function revenue() 
+    public function revenue()
     {
         return count($this->students) * $this->fee;
+    }
+
+    public function countFinished()
+    {
+        $countFinished = 0;
+        foreach ($this->lessons as $lesson) {
+            if ($lesson->end_time <= Carbon::now()) {
+                $countFinished += 1;
+            }
+        }
+
+        return $countFinished;
+    }
+    
+    public function percentFinished()
+    {
+        $percentFinished = 0;
+        $percentFinished = $this->countFinished()/ (count($this->lessons)) * 100;
+
+        return $percentFinished;
     }
 
     public function isFinished()
@@ -79,6 +98,27 @@ class Classroom extends Model
                 return false;
             }
         }
+
         return true;
+    }
+
+    public function countHomework() {
+        $countHomework = 0;
+
+        foreach ($this->lessons as $lesson) {
+            $countHomework += count($lesson->homeworks);
+        }
+
+        return $countHomework;
+    }
+
+    public function countDocument() {
+        $countDocument = 0;
+
+        foreach ($this->lessons as $lesson) {
+            $countDocument += count($lesson->documents);
+        }
+
+        return $countDocument;
     }
 }

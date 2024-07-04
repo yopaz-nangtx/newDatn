@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classroom;
 use App\Models\Homework;
 use App\Models\HomeworkQuestion;
+use App\Models\HomeworkResult;
+use App\Models\Lesson;
+use App\Models\LessonHomework;
 use App\Models\Question;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\HomeworkResult;
-use App\Models\Lesson;
-use App\Models\LessonHomework;
 
 class HomeworkController extends Controller
 {
@@ -53,7 +52,7 @@ class HomeworkController extends Controller
             $homework->end_time = $dateTime;
             $homework->save();
 
-            if(isset($request->questions)) {
+            if (isset($request->questions)) {
                 foreach ($request->questions as $questionId) {
                     HomeworkQuestion::create([
                         'homework_id' => $homework->id,
@@ -117,7 +116,7 @@ class HomeworkController extends Controller
             }
             $homework->save();
 
-            if(isset($request->questions)) {
+            if (isset($request->questions)) {
                 foreach ($request->questions as $questionId) {
                     HomeworkQuestion::create([
                         'homework_id' => $homework->id,
@@ -161,7 +160,7 @@ class HomeworkController extends Controller
         }
     }
 
-    // API 
+    // API
     public function listApi(Request $request)
     {
         $user = $request->user();
@@ -172,7 +171,7 @@ class HomeworkController extends Controller
         $homeworks = Homework::whereIn('id', $homeworkIds)->get();
         foreach ($homeworks as $homework) {
             $lessonId = LessonHomework::where('homework_id', $homework->id)->first()->lesson_id;
-            $lesson = Lesson::find( $lessonId );
+            $lesson = Lesson::find($lessonId);
             $classroom = $lesson->classroom;
 
             $homework['teacher'] = $classroom->teacher->name;

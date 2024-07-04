@@ -75,6 +75,9 @@
                                             <td>{{ $list->address }}</td>
                                             <td class="text-end">
                                                 <div class="actions">
+                                                    <a href="{{ url('student/dashboard/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                        <i class="far fa-eye me-2" title="Overview"></i>
+                                                    </a>
                                                     <a href="{{ url('student/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
                                                         <i class="far fa-edit me-2"></i>
                                                     </a>

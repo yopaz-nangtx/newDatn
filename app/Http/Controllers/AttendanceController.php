@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Models\Attendance;
 use App\Models\Classroom;
-use App\Models\Lesson;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-
 
 class AttendanceController extends Controller
 {
@@ -34,7 +32,7 @@ class AttendanceController extends Controller
             $attendance['lesson_name'] = $attendance->lesson->lesson_name;
             $attendance['class_name'] = $attendance->lesson->classroom;
             $attendance->lesson->startt_time = Carbon::parse($attendance->lesson->start_time)->format('d/m/Y H:i:s');
-            $attendance['created_att']= Carbon::parse($attendance->created_at)->format('d/m/Y H:i:s');
+            $attendance['created_att'] = Carbon::parse($attendance->created_at)->format('d/m/Y H:i:s');
         }
 
         return $attendances;

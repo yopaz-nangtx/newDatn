@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Classroom;
 use App\Models\Document;
 use App\Models\DocumentLesson;
 use App\Models\Homework;
 use App\Models\HomeworkResult;
-use App\Models\Room;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Brian2694\Toastr\Facades\Toastr;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use App\Models\Lesson;
 use App\Models\LessonHomework;
+use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LessonController extends Controller
 {
@@ -64,7 +61,7 @@ class LessonController extends Controller
             $lesson->end_time = $endTime;
             $lesson->save();
 
-            if(isset($request->homeworks)) {
+            if (isset($request->homeworks)) {
                 foreach ($request->homeworks as $homeworkId) {
                     LessonHomework::create([
                         'homework_id' => $homeworkId,
@@ -73,7 +70,7 @@ class LessonController extends Controller
                 }
             }
 
-            if(isset($request->documents)) {
+            if (isset($request->documents)) {
                 foreach ($request->documents as $documentId) {
                     DocumentLesson::create([
                         'document_id' => $documentId,
@@ -94,7 +91,8 @@ class LessonController extends Controller
         }
     }
 
-    public function lessonEdit(Request $request, $id, $class_id) {
+    public function lessonEdit(Request $request, $id, $class_id)
+    {
         $class = Classroom::findOrFail($class_id);
         $lesson = Lesson::where('id', $id)->first();
         $dateTime = Carbon::parse($lesson->start_time);
@@ -113,7 +111,8 @@ class LessonController extends Controller
     {
         $request->validate([
             'lesson_name' => 'required|string',
-            'start_date' => 'required|after:today',
+            'start_date' => 'required',
+            // 'start_date' => 'required|after:today',
             'start_time' => 'required',
         ]);
 
@@ -134,7 +133,7 @@ class LessonController extends Controller
                 $lessonHomework->delete();
             }
 
-            if(isset($request->homeworks)) {
+            if (isset($request->homeworks)) {
                 foreach ($request->homeworks as $homeworkId) {
                     LessonHomework::create([
                         'homework_id' => $homeworkId,
@@ -146,7 +145,7 @@ class LessonController extends Controller
             foreach ($lesson->lessonDocuments as $lessonDocument) {
                 $lessonDocument->delete();
             }
-            if(isset($request->documents)) {
+            if (isset($request->documents)) {
                 foreach ($request->documents as $documentId) {
                     DocumentLesson::create([
                         'document_id' => $documentId,
@@ -197,7 +196,7 @@ class LessonController extends Controller
 
         foreach ($students as $student) {
             $attendance = Attendance::where('lesson_id', $lesson->id)->where('student_id', $student->id)->first();
-            if($attendance ) {
+            if ($attendance) {
                 $student['attendance'] = $attendance;
                 $studentRender[] = $student;
             }
@@ -216,8 +215,8 @@ class LessonController extends Controller
 
         foreach ($students as $student) {
             $homeworkResults = HomeworkResult::where('student_id', $student->id)->whereIn('homework_id', $homeworkIds)->get();
-            if($homeworkResults) {
-                foreach($homeworkResults as $homeworkResult) {
+            if ($homeworkResults) {
+                foreach ($homeworkResults as $homeworkResult) {
                     $student['homeworkResult'] = $homeworkResult;
                     $studentRenders[] = $student;
                 }
@@ -227,7 +226,7 @@ class LessonController extends Controller
         return view('lesson.homework', compact('lesson', 'studentRenders'));
     }
 
-    //API 
+    //API
     public function detailApi(Request $request, $lesson_id)
     {
         $lesson = Lesson::where('id', $request->lesson_id)->with(['classroom', 'room'])->first();

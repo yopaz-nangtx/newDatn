@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
-use App\Models\Lesson;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -38,10 +37,9 @@ class HomeController extends Controller
         $countTeacher = count(User::where('role', 2)->get());
         $classes = Classroom::all();
         $countClass = count($classes);
-        foreach($classes as $class)
-        {
+        foreach ($classes as $class) {
             $countRevenue += $class->revenue();
-        } 
+        }
 
         return view('dashboard.home', compact('countStudent', 'countTeacher', 'countClass', 'countRevenue'));
     }
@@ -122,7 +120,7 @@ class HomeController extends Controller
         $teacher = User::find($id);
         $classes = $teacher->classes;
         $countClass = count($classes);
-        foreach( $classes as $class ) {
+        foreach ($classes as $class) {
             $countStudent += count($class->students);
             $countLesson += count($class->lessons);
         }
@@ -137,4 +135,43 @@ class HomeController extends Controller
         return view('dashboard.teacher_dashboard', compact('countClass', 'countStudent', 'countLesson', 'countHour', 'user', 'classrooms', 'today'));
     }
 
+    public function studentDashboardIndex($id)
+    {
+        $user = User::find($id);
+        $today = Carbon::today();
+
+        $classrooms = [];
+        $countClassFinished = 0;
+        $countLessonFinished = 0;
+        $countClass = 0;
+        $countLesson = 0;
+        $classes = $user->classrooms;
+        $countClass = count($classes);
+        $classroomIds = $classes->pluck('id');
+        $countClass = count($classes);
+        foreach ($classes as $class) {
+            $countLesson += count($class->lessons);
+        }
+        $countHour = $countLesson * 2;
+
+        $classrooms = Classroom::whereIn('id', $classroomIds)->
+            with(['lessons' => function ($query) use ($today) {
+                $query->whereDate('start_time', '=', $today);
+            }])
+                ->get();
+
+        foreach ($classrooms as $classroom) {
+            if ($classroom->isFinished() && count($classroom->lessons) != 0) {
+                $countClassFinished += 1;
+            }
+            foreach($classroom->lessons as $lesson) {
+                if($lesson->isFinished()) {
+                    $countLessonFinished += 1;
+                }
+            }
+        }
+        $countHourFinished = $countLessonFinished * 2;
+
+        return view('dashboard.student_dashboard', compact('classes','countClassFinished', 'countLessonFinished', 'countHourFinished', 'countClass', 'countLesson', 'countHour', 'user', 'classrooms', 'today'));
+    }
 }

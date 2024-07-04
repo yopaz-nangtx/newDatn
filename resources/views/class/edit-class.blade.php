@@ -53,7 +53,7 @@
                                             <select class="form-control  @error('teacher_id') is-invalid @enderror" name="teacher_id">
                                                 <option selected disabled>Select Teacher</option>
                                                 @foreach ($teachers as $teacher)
-                                                    <option value="{{ $teacher->id }}" @if($class->teacher->name == $teacher->name ) selected @endif>{{ $teacher->name }}</option>
+                                                    <option value="{{ $teacher?->id }}" @if($class->teacher?->name == $teacher?->name ) selected @endif>{{ $teacher?->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('teacher_id')
@@ -70,7 +70,7 @@
                                             <select class="form-control  @error('room_id') is-invalid @enderror" name="room_id">
                                                 <option selected disabled>Select Room</option>
                                                 @foreach ($rooms as $room)
-                                                    <option value="{{ $room->id }}" @if($class->room->name == $room->name ) selected @endif>{{ $room->name }}</option>
+                                                    <option value="{{ $room?->id }}" @if($class->room?->name == $room?->name ) selected @endif>{{ $room?->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('teacher_id')

@@ -73,6 +73,11 @@ class User extends Authenticatable
         return $this->role == 2;
     }
 
+    public function isStudent()
+    {
+        return $this->role == 3;
+    }
+
     public function roleName()
     {
         if ($this->role == 1) {
@@ -103,13 +108,15 @@ class User extends Authenticatable
     {
         if ($file) {
             $path = $file->store('avatars/'.$userId, 's3');
+
             return env('AWS_S3_BASE_URL', 'https://s3-datn.s3.ap-southeast-2.amazonaws.com/').$path;
         } else {
             return $this->image_url;
         }
     }
 
-    public function setSession() {
+    public function setSession()
+    {
         Session::put('id', $this->id);
         Session::put('name', $this->name);
         Session::put('email', $this->email);

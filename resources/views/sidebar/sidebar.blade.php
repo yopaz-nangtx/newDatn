@@ -15,6 +15,7 @@
                         <ul>
                             <li><a href="{{ route('home') }}" class="{{set_active(['home'])}}">Admin Dashboard</a></li>
                             <li><a class="{{ (request()->is('teacher/dashboard/*')) ? 'active' : '' }}">Teacher Dashboard</a></li>
+                            <li><a class="{{ (request()->is('student/dashboard/*')) ? 'active' : '' }}">Student Dashboard</a></li>
                         </ul>
                     </li>
 

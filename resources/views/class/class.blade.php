@@ -64,10 +64,10 @@
                                             <td hidden class="id">{{ $list->id }}</td>
                                             <td hidden class="avatar">{{ $list->upload }}</td>
                                             <td>{{ $list->name }}</td>
-                                            <td>{{ $list->teacher->name }}</td>
+                                            <td>{{ $list->teacher?->name }}</td>
                                             <td>{{ count($list->lessons) }}</td>
                                             <td>{{ count($list->students) }}</td>
-                                            <td>{{ $list->room->name }}</td>
+                                            <td>{{ $list->room?->name }}</td>
                                             <td>{{ number_format($list->fee , 0, ',', ',') }}</td>
                                             <td class="text-end">
                                                 <div class="actions">

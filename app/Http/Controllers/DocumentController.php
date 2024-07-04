@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
-use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 
 class DocumentController extends Controller
 {
@@ -29,14 +26,14 @@ class DocumentController extends Controller
     {
         $request->validate([
             'file' => 'required|mimes:doc,pdf,docx',
-            'name' => 'required|string'
+            'name' => 'required|string',
         ]);
 
         DB::beginTransaction();
         try {
             $document = new Document;
             $document->name = $request['name'];
-            $document->link_url = "";
+            $document->link_url = '';
             $document->save();
 
             $document->link_url = $document->uploadFile($request->file('file'), $document->id);

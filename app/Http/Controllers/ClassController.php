@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Classroom;
 use App\Models\ClassroomStudent;
 use App\Models\Lesson;
 use App\Models\Room;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClassController extends Controller
 {
@@ -38,7 +36,7 @@ class ClassController extends Controller
     {
         $students = User::where('role', 3)->orderBy('id', 'desc')->get();
         $rooms = Room::all();
-        $teachers = User::where('role',2)->orderBy('id','desc')->get();
+        $teachers = User::where('role', 2)->orderBy('id', 'desc')->get();
 
         return view('class.add-class', compact('students', 'rooms', 'teachers'));
     }
@@ -63,7 +61,7 @@ class ClassController extends Controller
             $classroom->fee = $request['fee'];
             $classroom->save();
 
-            if(isset($request->students)) {
+            if (isset($request->students)) {
                 foreach ($request->students as $studentId) {
                     ClassroomStudent::create([
                         'classroom_id' => $classroom->id,
@@ -84,11 +82,12 @@ class ClassController extends Controller
         }
     }
 
-    public function classEdit(Request $request, $id) {
+    public function classEdit(Request $request, $id)
+    {
         $class = Classroom::findOrFail($id);
         $students = User::where('role', 3)->orderBy('id', 'desc')->get();
         $rooms = Room::all();
-        $teachers = User::where('role',2)->orderBy('id','desc')->get();
+        $teachers = User::where('role', 2)->orderBy('id', 'desc')->get();
         $studentIds = $class->students->pluck('id');
 
         return view('class.edit-class', compact('class', 'students', 'rooms', 'teachers', 'studentIds'));
@@ -117,7 +116,7 @@ class ClassController extends Controller
             foreach ($classroom->classroomStudents as $classroomStudent) {
                 $classroomStudent->delete();
             }
-            if(isset($request->students)) {
+            if (isset($request->students)) {
                 foreach ($request->students as $studentId) {
                     ClassroomStudent::create([
                         'classroom_id' => $classroom->id,
@@ -225,13 +224,13 @@ class ClassController extends Controller
         //TODO : sửa lại db
         $user = User::where('id', $request->user()->id)->first();
         $classrooms = $user->classrooms;
-        foreach($classrooms as $classroom) {
+        foreach ($classrooms as $classroom) {
             $homeworkClassroom = [];
             $classroom['teacher'] = $classroom->teacher;
             $classroom['room'] = $classroom->room;
 
-            foreach($classroom->lessons as $lesson) {
-                foreach($lesson->homeworks as $homework) {
+            foreach ($classroom->lessons as $lesson) {
+                foreach ($lesson->homeworks as $homework) {
                     $homeworkClassroom[] = $homework;
                 }
             }
@@ -239,6 +238,6 @@ class ClassController extends Controller
         }
 
         return $classrooms;
-        
+
     }
 }

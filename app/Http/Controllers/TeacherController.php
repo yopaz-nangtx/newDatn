@@ -103,7 +103,7 @@ class TeacherController extends Controller
 
         DB::beginTransaction();
         try {
-             unset($request['_token'], $request['_method']);
+            unset($request['_token'], $request['_method']);
             if ($request->file('image')) {
                 $request['image_url'] = $this->upload($request);
             }
@@ -196,6 +196,4 @@ class TeacherController extends Controller
 
         return $teachers;
     }
-
-
 }

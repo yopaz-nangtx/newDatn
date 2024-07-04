@@ -68,7 +68,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('user/profile/edit', 'userProfileEdit')->middleware('auth')->name('user/profile/edit');
         Route::post('user/profile/update', 'userProfileUpdate')->middleware('auth')->name('user/profile/update');
         Route::get('teacher/dashboard/{id}', 'teacherDashboardIndex')->middleware('auth')->name('teacher/dashboard');
-        Route::get('student/dashboard', 'studentDashboardIndex')->middleware('auth')->name('student/dashboard');
+        Route::get('student/dashboard/{id}', 'studentDashboardIndex')->middleware('auth')->name('student/dashboard');
     });
 
     // ------------------------ setting -------------------------------//
@@ -154,8 +154,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('lesson/homework/{lesson_id}', 'lessonHomework'); // view for edit
         Route::post('lesson/homework/{lesson_id}', 'postLessonHomework'); // view for edit
         Route::get('lesson/attendance/{id}', 'lessonAttendance'); // view for edit
-
-        
     });
 
     Route::controller(AttendanceController::class)->group(function () {

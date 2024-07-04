@@ -37,30 +37,36 @@ class LoginController extends Controller
             $password = $request->password;
 
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
-                /** get session */
                 $user = Auth::User();
-                Session::put('id', $user->id);
-                Session::put('name', $user->name);
-                Session::put('email', $user->email);
-                Session::put('gender', $user->gender);
-                Session::put('phone_number', $user->phone_number);
-                Session::put('address', $user->address);
-                Session::put('role_name', $user->roleName());
-                Session::put('role', $user->role);
-                Session::put('birthday', $user->birthday);
-                Session::put('image_url', $user->image_url);
-                Toastr::success('Login successfully', 'Success');
+                if ($user->role != 3) {
+                    /** get session */
+                    Session::put('id', $user->id);
+                    Session::put('name', $user->name);
+                    Session::put('email', $user->email);
+                    Session::put('gender', $user->gender);
+                    Session::put('phone_number', $user->phone_number);
+                    Session::put('address', $user->address);
+                    Session::put('role_name', $user->roleName());
+                    Session::put('role', $user->role);
+                    Session::put('birthday', $user->birthday);
+                    Session::put('image_url', $user->image_url);
+                    Toastr::success('Login successfully', 'Success');
 
-                return redirect()->route('home');
+                    return redirect()->route('home');
+                } else {
+                    Toastr::error('fail, PERMISSION DENIED', 'Error');
+
+                    return redirect('login');
+                }
             } else {
-                Toastr::error('fail, WRONG USERNAME OR PASSWORD :)', 'Error');
+                Toastr::error('fail, WRONG USERNAME OR PASSWORD', 'Error');
 
                 return redirect('login');
             }
 
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('fail, LOGIN :)', 'Error');
+            Toastr::error('fail, LOGIN', 'Error');
 
             return redirect()->back();
         }

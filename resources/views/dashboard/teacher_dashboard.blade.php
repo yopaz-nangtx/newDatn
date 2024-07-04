@@ -107,8 +107,6 @@
             <div class="row">
                 <div class="col-12 col-lg-12 col-xl-8">
                     <div class="row">
-                        
-                        
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-12 col-xl-12 d-flex">
@@ -160,14 +158,14 @@
                 <div class="col-12 col-lg-12 col-xl-4 d-flex">
                     <div class="card flex-fill comman-shadow">
                         <div class="card-body">
-                            <div id="calendar-doctor" class="calendar-container"></div>
+                            <div id="calendar-doctor" class="calendar-container calendar-doctor-teacher"></div>
                             <div class="calendar-info1">
+                                <div class="upcome-event-date">
+                                    <h3>{{ $today->format('j M') }}</h3>
+                                    <span><i class="fas fa-ellipsis-h"></i></span>
+                                </div>
                                 @foreach($classrooms as $classroom)
                                     @foreach($classroom->lessons as $lesson)
-                                        <div class="upcome-event-date">
-                                            <h3>{{ $today->format('j M') }}</h3>
-                                            <span><i class="fas fa-ellipsis-h"></i></span>
-                                        </div>
                                         <div class="calendar-details">
                                             <p>{{ $lesson->start_time->format('h:i a') }}</p>
                                             <div class="calendar-box normal-bg">

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Lesson extends Model
 {
@@ -21,7 +21,7 @@ class Lesson extends Model
         'start_time' => 'datetime',
         'end_time' => 'datetime',
     ];
-    
+
     // 1 class - 1 room
     public function room()
     {
@@ -63,6 +63,7 @@ class Lesson extends Model
         if ($this->end_time >= Carbon::now()) {
             return false;
         }
+
         return true;
     }
 }

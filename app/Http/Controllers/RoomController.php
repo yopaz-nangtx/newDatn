@@ -72,7 +72,6 @@ class RoomController extends Controller
                 Rule::unique('rooms')->ignore($room->name, 'name'),
             ],
             'capacity' => 'required|integer|gt:0',
-            'description' => 'string',
         ]);
 
         DB::beginTransaction();

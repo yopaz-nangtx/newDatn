@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\api\DashboardController;
-use Illuminate\Http\Request;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
@@ -65,10 +64,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-// Admin dashboard api 
+// Admin dashboard api
 Route::prefix('dashboard')->group(function () {
     Route::get('/admin', [DashboardController::class, 'admin'])->name('get.admin-dashboard-api');
     Route::get('/teacher/{id}', [DashboardController::class, 'teacher'])->name('get.teacher-dashboard-api');
     Route::get('/schedule/teacher/{id}', [DashboardController::class, 'scheduleTeacher'])->name('get.teacher-dashboard-api');
+    Route::get('/schedule/student/{id}', [DashboardController::class, 'scheduleStudent'])->name('get.student-dashboard-api');
 });
-    
