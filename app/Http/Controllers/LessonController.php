@@ -20,8 +20,8 @@ class LessonController extends Controller
     public function lesson(Request $request, $id)
     {
         $class = Classroom::findOrFail($id);
+        $lessons = Lesson::where('classroom_id', $id)->orderBy('start_time')->get();
 
-        $lessons = $class->lessons;
         foreach ($lessons as $lesson) {
             $lesson['attendance'] = count($lesson->attendances()->where('status', 0)->get());
             $lesson['is_finished'] = Carbon::now()->greaterThan($lesson->end_time) ? 1 : 0;

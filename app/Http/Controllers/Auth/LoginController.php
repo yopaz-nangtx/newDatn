@@ -51,8 +51,12 @@ class LoginController extends Controller
                     Session::put('birthday', $user->birthday);
                     Session::put('image_url', $user->image_url);
                     Toastr::success('Login successfully', 'Success');
-
-                    return redirect()->route('home');
+                    if($user->role == 1) {
+                        return redirect()->route('home');
+                    } 
+                    if($user->role == 2) {
+                        return redirect()->route("teacher/dashboard", ['id' => $user->id]);
+                    } 
                 } else {
                     Toastr::error('fail, PERMISSION DENIED', 'Error');
 

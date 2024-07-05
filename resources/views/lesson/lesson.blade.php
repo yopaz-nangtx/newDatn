@@ -93,9 +93,11 @@
                                                     <a href="{{ url('lesson/edit/'.$list->id . '/class/' . $class->id) }}" class="btn btn-sm bg-danger-light {{ $list->is_finished ? 'disabled-link' : '' }}" title="Edit">
                                                         <i class="fas fa-edit me-2"></i>
                                                     </a>
-                                                    <a class="btn btn-sm bg-danger-light lesson_delete {{ $list->is_finished ? 'disabled-link' : '' }}" data-bs-toggle="modal" data-bs-target="#lessonUser" title="Delete">
-                                                        <i class="far fa-trash-alt me-2"></i>
-                                                    </a>
+                                                    @if(Session::get('role') == 1) 
+                                                        <a class="btn btn-sm bg-danger-light lesson_delete {{ $list->is_finished ? 'disabled-link' : '' }}" data-bs-toggle="modal" data-bs-target="#lessonUser" title="Delete">
+                                                            <i class="far fa-trash-alt me-2"></i>
+                                                        </a>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

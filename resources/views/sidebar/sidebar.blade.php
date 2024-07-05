@@ -122,8 +122,6 @@
                         </a>
                         <ul>
                             <li><a href="{{ route('class/list') }}" class="{{set_active(['class/list','class/grid/page'])}}">Class List</a></li>
-                            <li><a href="{{ route('class/add/page') }}" class="{{set_active(['class/add/page'])}}">Class Add</a></li>
-                            <li><a class="{{ (request()->is('class/edit/*')) ? 'active' : '' }}">Class Edit</a></li>
                         </ul>
                     </li>
 

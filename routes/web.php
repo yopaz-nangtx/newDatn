@@ -45,9 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('home', function () {
         return view('home');
     });
-    Route::get('home', function () {
-        return view('home');
-    });
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
@@ -67,6 +64,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('user/profile/page', 'userProfile')->middleware('auth')->name('user/profile/page');
         Route::get('user/profile/edit', 'userProfileEdit')->middleware('auth')->name('user/profile/edit');
         Route::post('user/profile/update', 'userProfileUpdate')->middleware('auth')->name('user/profile/update');
+        Route::get('teacher/home', 'teacherDashboardHome')->middleware('auth')->name('teacher/home');
         Route::get('teacher/dashboard/{id}', 'teacherDashboardIndex')->middleware('auth')->name('teacher/dashboard');
         Route::get('student/dashboard/{id}', 'studentDashboardIndex')->middleware('auth')->name('student/dashboard');
     });

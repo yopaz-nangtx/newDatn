@@ -17,9 +17,7 @@ $(document).ready(async function () {
     const currentURL = window.location.href;
     const path = currentURL.split('/');
     const value = path[path.length - 1];
-
     const data = await fetchData(baseUrl +'/dashboard/teacher/' + value);
-    console.log(data);
 
     if ($("#teacher-monthly-area").length > 0) {
         var options = {

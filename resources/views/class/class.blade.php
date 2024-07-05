@@ -27,7 +27,9 @@
                                         <h3 class="page-title">Classes</h3>
                                     </div>
                                     <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <a href="{{ route('class/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        @if(Session::get('role') == 1) 
+                                            <a href="{{ route('class/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -74,9 +76,11 @@
                                                     <a href="{{ url('lesson/list/'.$list->id) }}" class="btn btn-sm bg-danger-light">
                                                         <i class="far fa-eye me-2"></i>
                                                     </a>
-                                                    <a href="{{ url('class/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
-                                                        <i class="far fa-edit me-2"></i>
-                                                    </a>
+                                                    @if(Session::get('role') == 1) 
+                                                        <a href="{{ url('class/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                            <i class="far fa-edit me-2"></i>
+                                                        </a>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

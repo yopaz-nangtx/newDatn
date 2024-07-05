@@ -5,40 +5,42 @@
     {!! Toastr::message() !!}
     <div class="page-wrapper">
         <div class="content container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title d-flex justify-content-between">
-                        <span>Teacher Details</span>
-                        <a class="edit-link"
-                            href="{{ url('teacher/edit/'.$user->id) }}"><i
-                                class="far fa-edit me-1"></i>Edit</a>
-                    </h5>
-                    <div class="row">
-                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Name</p>
-                        <p class="col-sm-9">{{ $user->name }}</p>
-                    </div>
-                    <div class="row">
-                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Gender</p>
-                        <p class="col-sm-9">{{ $user->genderName() }}</p>
-                    </div>
-                    <div class="row">
-                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Date of Birth</p>
-                        <p class="col-sm-9">{{ \Carbon\Carbon::parse($user->birthday)->format('d/m/Y') }}</p>
-                    </div>
-                    <div class="row">
-                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Email</p>
-                        <p class="col-sm-9" style="color: blue">{{ $user->email }}</p>
-                    </div>
-                    <div class="row">
-                        <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Mobile</p>
-                        <p class="col-sm-9">{{ $user->phone_number }}</p>
-                    </div>
-                    <div class="row">
-                        <p class="col-sm-3 text-muted text-sm-end mb-0">Address</p>
-                        <p class="col-sm-9 mb-0">{{ $user->address }}</p>
+            @if(Session::get('role') == 1) 
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-between">
+                            <span>Teacher Details</span>
+                            <a class="edit-link"
+                                href="{{ url('teacher/edit/'.$user->id) }}"><i
+                                    class="far fa-edit me-1"></i>Edit</a>
+                        </h5>
+                        <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Name</p>
+                            <p class="col-sm-9">{{ $user->name }}</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Gender</p>
+                            <p class="col-sm-9">{{ $user->genderName() }}</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Date of Birth</p>
+                            <p class="col-sm-9">{{ \Carbon\Carbon::parse($user->birthday)->format('d/m/Y') }}</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Email</p>
+                            <p class="col-sm-9" style="color: blue">{{ $user->email }}</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Mobile</p>
+                            <p class="col-sm-9">{{ $user->phone_number }}</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-sm-3 text-muted text-sm-end mb-0">Address</p>
+                            <p class="col-sm-9 mb-0">{{ $user->address }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
             <div class="row">
                 <div class="col-xl-3 col-sm-6 col-12 d-flex">
