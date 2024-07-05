@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="col-6">
                                         <ul class="chart-list-out">
-                                            <li class="star-menus" title="Detail"><a href=""><i class="fas fa-eye"></i></a></li>
+                                            
                                         </ul>
                                     </div>
                                 </div>

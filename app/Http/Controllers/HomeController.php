@@ -160,16 +160,13 @@ class HomeController extends Controller
             }])
                 ->get();
 
-        foreach ($classrooms as $classroom) {
+        foreach ($classes as $classroom) {
             if ($classroom->isFinished() && count($classroom->lessons) != 0) {
                 $countClassFinished += 1;
             }
-            foreach($classroom->lessons as $lesson) {
-                if($lesson->isFinished()) {
-                    $countLessonFinished += 1;
-                }
-            }
+            $countLessonFinished += $classroom->countFinished();
         }
+
         $countHourFinished = $countLessonFinished * 2;
 
         return view('dashboard.student_dashboard', compact('classes','countClassFinished', 'countLessonFinished', 'countHourFinished', 'countClass', 'countLesson', 'countHour', 'user', 'classrooms', 'today'));
