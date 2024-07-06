@@ -18,6 +18,8 @@ class AdminPermission
     {
         if (Auth::user()->isAdmin()) {
             return $next($request);
+        } else {
+            return response()->view('errors.500');
         }
     }
 }

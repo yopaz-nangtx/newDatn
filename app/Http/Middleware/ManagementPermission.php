@@ -18,6 +18,8 @@ class ManagementPermission
     {
         if (Auth::user()->isAdmin() || Auth::user()->isTeacher()) {
             return $next($request);
+        } else {
+            return response()->view('errors.500');
         }
     }
 }

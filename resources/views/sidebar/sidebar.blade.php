@@ -111,7 +111,7 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul>
-                            <li><a class="{{ (request()->is('teacher/dashboard/*')) ? 'active' : '' }}">Teacher Dashboard</a></li>
+                            <li><a href="{{ route('teacher/dashboard', ['id' => Session::get('id')]) }}" class="{{ (request()->is('teacher/dashboard/*')) ? 'active' : '' }}">Teacher Dashboard</a></li>
                         </ul>
                     </li>
 
